@@ -1,0 +1,30 @@
+edges
+| Test.java:11:27:11:51 | name : String | Test.java:13:35:13:37 | sql | provenance | Sink:MaD:50985 |
+| Test.java:17:28:17:52 | sort : String | Test.java:19:35:19:37 | sql | provenance | Sink:MaD:50985 |
+| Test.java:23:28:23:52 | name : String | Test.java:25:19:25:22 | name : String | provenance |  |
+| Test.java:25:9:25:10 | sb [post update] : StringBuilder | Test.java:27:35:27:36 | sb : StringBuilder | provenance |  |
+| Test.java:25:19:25:22 | name : String | Test.java:25:9:25:10 | sb [post update] : StringBuilder | provenance | MaD:44184 |
+| Test.java:27:35:27:36 | sb : StringBuilder | Test.java:27:35:27:47 | toString(...) | provenance | MaD:44199 Sink:MaD:50985 |
+| Test.java:43:36:43:60 | name : String | Test.java:44:22:44:25 | name : String | provenance |  |
+| Test.java:44:22:44:25 | name : String | Test.java:47:31:47:41 | name : String | provenance |  |
+| Test.java:47:31:47:41 | name : String | Test.java:49:35:49:37 | sql | provenance | Sink:MaD:50985 |
+nodes
+| Test.java:11:27:11:51 | name : String | semmle.label | name : String |
+| Test.java:13:35:13:37 | sql | semmle.label | sql |
+| Test.java:17:28:17:52 | sort : String | semmle.label | sort : String |
+| Test.java:19:35:19:37 | sql | semmle.label | sql |
+| Test.java:23:28:23:52 | name : String | semmle.label | name : String |
+| Test.java:25:9:25:10 | sb [post update] : StringBuilder | semmle.label | sb [post update] : StringBuilder |
+| Test.java:25:19:25:22 | name : String | semmle.label | name : String |
+| Test.java:27:35:27:36 | sb : StringBuilder | semmle.label | sb : StringBuilder |
+| Test.java:27:35:27:47 | toString(...) | semmle.label | toString(...) |
+| Test.java:43:36:43:60 | name : String | semmle.label | name : String |
+| Test.java:44:22:44:25 | name : String | semmle.label | name : String |
+| Test.java:47:31:47:41 | name : String | semmle.label | name : String |
+| Test.java:49:35:49:37 | sql | semmle.label | sql |
+subpaths
+#select
+| Test.java:13:35:13:37 | sql | Test.java:11:27:11:51 | name : String | Test.java:13:35:13:37 | sql | Spring MVC input reaches dynamic SQL/JPQL query text. |
+| Test.java:19:35:19:37 | sql | Test.java:17:28:17:52 | sort : String | Test.java:19:35:19:37 | sql | Spring MVC input reaches dynamic SQL/JPQL query text. |
+| Test.java:27:35:27:47 | toString(...) | Test.java:23:28:23:52 | name : String | Test.java:27:35:27:47 | toString(...) | Spring MVC input reaches dynamic SQL/JPQL query text. |
+| Test.java:49:35:49:37 | sql | Test.java:43:36:43:60 | name : String | Test.java:49:35:49:37 | sql | Spring MVC input reaches dynamic SQL/JPQL query text. |

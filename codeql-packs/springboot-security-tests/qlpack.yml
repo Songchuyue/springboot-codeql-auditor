@@ -1,0 +1,6 @@
+name: scy/springboot-security-tests
+version: 0.0.0  
+dependencies:
+  scy/springboot-security-queries: "*"
+extractor: java-kotlin
+tests: .
