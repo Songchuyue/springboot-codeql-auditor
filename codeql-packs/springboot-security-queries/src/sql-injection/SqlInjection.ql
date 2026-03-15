@@ -20,7 +20,7 @@ import SqlInjectionLib
 
 module SpringSqlInjectionConfig implements DataFlow::ConfigSig {
   predicate isSource(DataFlow::Node src) {
-    isSpringMvcSourceNode(src)
+    isOfficialSpringMvcSourceNode(src)
   }
 
   predicate isSink(DataFlow::Node sink) {
@@ -41,9 +41,8 @@ module SpringSqlInjectionConfig implements DataFlow::ConfigSig {
 module SpringSqlInjectionFlow = TaintTracking::Global<SpringSqlInjectionConfig>;
 import SpringSqlInjectionFlow::PathGraph
 
-from QueryInjectionSink sink, SpringSqlInjectionFlow::PathNode source, SpringSqlInjectionFlow::PathNode pathSink
+from SpringSqlInjectionFlow::PathNode source, SpringSqlInjectionFlow::PathNode sink
 where
-  SpringSqlInjectionFlow::flowPath(source, pathSink) and
-  pathSink.getNode() = sink
-select sink, source, pathSink,
+  SpringSqlInjectionFlow::flowPath(source, sink)
+select sink.getNode(), source, sink,
   "Spring MVC input reaches dynamic SQL/JPQL query text."

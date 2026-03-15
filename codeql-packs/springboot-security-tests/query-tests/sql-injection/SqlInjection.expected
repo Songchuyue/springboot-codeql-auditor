@@ -1,30 +1,122 @@
 edges
-| Test.java:11:27:11:51 | name : String | Test.java:13:35:13:37 | sql | provenance | Sink:MaD:50985 |
-| Test.java:17:28:17:52 | sort : String | Test.java:19:35:19:37 | sql | provenance | Sink:MaD:50985 |
-| Test.java:23:28:23:52 | name : String | Test.java:25:19:25:22 | name : String | provenance |  |
-| Test.java:25:9:25:10 | sb [post update] : StringBuilder | Test.java:27:35:27:36 | sb : StringBuilder | provenance |  |
-| Test.java:25:19:25:22 | name : String | Test.java:25:9:25:10 | sb [post update] : StringBuilder | provenance | MaD:44184 |
-| Test.java:27:35:27:36 | sb : StringBuilder | Test.java:27:35:27:47 | toString(...) | provenance | MaD:44199 Sink:MaD:50985 |
-| Test.java:43:36:43:60 | name : String | Test.java:44:22:44:25 | name : String | provenance |  |
-| Test.java:44:22:44:25 | name : String | Test.java:47:31:47:41 | name : String | provenance |  |
-| Test.java:47:31:47:41 | name : String | Test.java:49:35:49:37 | sql | provenance | Sink:MaD:50985 |
+| Test.java:31:24:31:51 | keyword : String | Test.java:33:28:33:30 | sql | provenance | Sink:MaD:50984 |
+| Test.java:37:25:37:52 | keyword : String | Test.java:39:28:39:30 | sql | provenance | Sink:MaD:50984 |
+| Test.java:43:31:43:58 | keyword : String | Test.java:45:19:45:25 | keyword : String | provenance |  |
+| Test.java:45:9:45:10 | sb [post update] : StringBuilder | Test.java:47:28:47:29 | sb : StringBuilder | provenance |  |
+| Test.java:45:19:45:25 | keyword : String | Test.java:45:9:45:10 | sb [post update] : StringBuilder | provenance | MaD:44184 |
+| Test.java:47:28:47:29 | sb : StringBuilder | Test.java:47:28:47:40 | toString(...) | provenance | MaD:44199 Sink:MaD:50984 |
+| Test.java:51:24:51:51 | keyword : String | Test.java:52:77:52:83 | keyword : String | provenance |  |
+| Test.java:52:22:52:84 | format(...) : String | Test.java:53:28:53:30 | sql | provenance | Sink:MaD:50984 |
+| Test.java:52:22:52:84 | new ..[] { .. } : Object[] [[]] : String | Test.java:52:22:52:84 | format(...) : String | provenance | MaD:44224 |
+| Test.java:52:77:52:83 | keyword : String | Test.java:52:22:52:84 | new ..[] { .. } : Object[] [[]] : String | provenance |  |
+| Test.java:57:33:57:60 | keyword : String | Test.java:58:39:58:45 | keyword : String | provenance |  |
+| Test.java:58:22:58:46 | buildUnsafeWhere(...) : String | Test.java:59:28:59:30 | sql | provenance | Sink:MaD:50984 |
+| Test.java:58:39:58:45 | keyword : String | Test.java:58:22:58:46 | buildUnsafeWhere(...) : String | provenance |  |
+| Test.java:58:39:58:45 | keyword : String | Test.java:200:29:200:42 | keyword : String | provenance |  |
+| Test.java:98:35:98:62 | keyword : String | Test.java:101:25:101:27 | sql | provenance | Sink:MaD:44721 |
+| Test.java:105:36:105:63 | keyword : String | Test.java:108:26:108:28 | sql | provenance | Sink:MaD:44722 |
+| Test.java:112:45:112:72 | keyword : String | Test.java:114:60:114:62 | sql | provenance | Sink:MaD:44710 |
+| Test.java:135:31:135:58 | keyword : String | Test.java:137:35:137:38 | jpql | provenance |  |
+| Test.java:141:37:141:64 | keyword : String | Test.java:143:41:143:43 | sql | provenance |  |
+| Test.java:147:24:147:51 | keyword : String | Test.java:149:35:149:38 | jpql | provenance |  |
+| Test.java:181:33:181:60 | keyword : String | Test.java:182:32:182:38 | keyword : String | provenance |  |
+| Test.java:182:32:182:38 | keyword : String | Test.java:230:25:230:38 | keyword : String | provenance |  |
+| Test.java:186:33:186:60 | keyword : String | Test.java:187:33:187:39 | keyword : String | provenance |  |
+| Test.java:187:33:187:39 | keyword : String | Test.java:234:26:234:39 | keyword : String | provenance |  |
+| Test.java:191:28:191:55 | keyword : String | Test.java:192:39:192:45 | keyword : String | provenance |  |
+| Test.java:192:22:192:46 | buildUnsafeWhere(...) : String | Test.java:193:24:193:26 | sql : String | provenance |  |
+| Test.java:192:39:192:45 | keyword : String | Test.java:192:22:192:46 | buildUnsafeWhere(...) : String | provenance |  |
+| Test.java:192:39:192:45 | keyword : String | Test.java:200:29:200:42 | keyword : String | provenance |  |
+| Test.java:193:24:193:26 | sql : String | Test.java:252:18:252:27 | sql : String | provenance |  |
+| Test.java:200:29:200:42 | keyword : String | Test.java:201:16:201:67 | ... + ... : String | provenance |  |
+| Test.java:204:31:204:44 | keyword : String | Test.java:205:16:205:56 | ... + ... : String | provenance |  |
+| Test.java:230:25:230:38 | keyword : String | Test.java:231:42:231:48 | keyword : String | provenance |  |
+| Test.java:231:42:231:48 | keyword : String | Test.java:241:28:241:41 | keyword : String | provenance |  |
+| Test.java:234:26:234:39 | keyword : String | Test.java:235:45:235:51 | keyword : String | provenance |  |
+| Test.java:235:26:235:52 | buildUnsafeOrderBy(...) : String | Test.java:236:35:236:37 | sql : String | provenance |  |
+| Test.java:235:45:235:51 | keyword : String | Test.java:204:31:204:44 | keyword : String | provenance |  |
+| Test.java:235:45:235:51 | keyword : String | Test.java:235:26:235:52 | buildUnsafeOrderBy(...) : String | provenance |  |
+| Test.java:236:35:236:37 | sql : String | Test.java:246:21:246:30 | sql : String | provenance |  |
+| Test.java:241:28:241:41 | keyword : String | Test.java:242:43:242:49 | keyword : String | provenance |  |
+| Test.java:242:26:242:50 | buildUnsafeWhere(...) : String | Test.java:243:32:243:34 | sql | provenance | Sink:MaD:50984 |
+| Test.java:242:43:242:49 | keyword : String | Test.java:200:29:200:42 | keyword : String | provenance |  |
+| Test.java:242:43:242:49 | keyword : String | Test.java:242:26:242:50 | buildUnsafeWhere(...) : String | provenance |  |
+| Test.java:246:21:246:30 | sql : String | Test.java:247:32:247:34 | sql | provenance | Sink:MaD:50984 |
+| Test.java:252:18:252:27 | sql : String | Test.java:253:32:253:34 | sql | provenance | Sink:MaD:50984 |
 nodes
-| Test.java:11:27:11:51 | name : String | semmle.label | name : String |
-| Test.java:13:35:13:37 | sql | semmle.label | sql |
-| Test.java:17:28:17:52 | sort : String | semmle.label | sort : String |
-| Test.java:19:35:19:37 | sql | semmle.label | sql |
-| Test.java:23:28:23:52 | name : String | semmle.label | name : String |
-| Test.java:25:9:25:10 | sb [post update] : StringBuilder | semmle.label | sb [post update] : StringBuilder |
-| Test.java:25:19:25:22 | name : String | semmle.label | name : String |
-| Test.java:27:35:27:36 | sb : StringBuilder | semmle.label | sb : StringBuilder |
-| Test.java:27:35:27:47 | toString(...) | semmle.label | toString(...) |
-| Test.java:43:36:43:60 | name : String | semmle.label | name : String |
-| Test.java:44:22:44:25 | name : String | semmle.label | name : String |
-| Test.java:47:31:47:41 | name : String | semmle.label | name : String |
-| Test.java:49:35:49:37 | sql | semmle.label | sql |
+| Test.java:31:24:31:51 | keyword : String | semmle.label | keyword : String |
+| Test.java:33:28:33:30 | sql | semmle.label | sql |
+| Test.java:37:25:37:52 | keyword : String | semmle.label | keyword : String |
+| Test.java:39:28:39:30 | sql | semmle.label | sql |
+| Test.java:43:31:43:58 | keyword : String | semmle.label | keyword : String |
+| Test.java:45:9:45:10 | sb [post update] : StringBuilder | semmle.label | sb [post update] : StringBuilder |
+| Test.java:45:19:45:25 | keyword : String | semmle.label | keyword : String |
+| Test.java:47:28:47:29 | sb : StringBuilder | semmle.label | sb : StringBuilder |
+| Test.java:47:28:47:40 | toString(...) | semmle.label | toString(...) |
+| Test.java:51:24:51:51 | keyword : String | semmle.label | keyword : String |
+| Test.java:52:22:52:84 | format(...) : String | semmle.label | format(...) : String |
+| Test.java:52:22:52:84 | new ..[] { .. } : Object[] [[]] : String | semmle.label | new ..[] { .. } : Object[] [[]] : String |
+| Test.java:52:77:52:83 | keyword : String | semmle.label | keyword : String |
+| Test.java:53:28:53:30 | sql | semmle.label | sql |
+| Test.java:57:33:57:60 | keyword : String | semmle.label | keyword : String |
+| Test.java:58:22:58:46 | buildUnsafeWhere(...) : String | semmle.label | buildUnsafeWhere(...) : String |
+| Test.java:58:39:58:45 | keyword : String | semmle.label | keyword : String |
+| Test.java:59:28:59:30 | sql | semmle.label | sql |
+| Test.java:98:35:98:62 | keyword : String | semmle.label | keyword : String |
+| Test.java:101:25:101:27 | sql | semmle.label | sql |
+| Test.java:105:36:105:63 | keyword : String | semmle.label | keyword : String |
+| Test.java:108:26:108:28 | sql | semmle.label | sql |
+| Test.java:112:45:112:72 | keyword : String | semmle.label | keyword : String |
+| Test.java:114:60:114:62 | sql | semmle.label | sql |
+| Test.java:135:31:135:58 | keyword : String | semmle.label | keyword : String |
+| Test.java:137:35:137:38 | jpql | semmle.label | jpql |
+| Test.java:141:37:141:64 | keyword : String | semmle.label | keyword : String |
+| Test.java:143:41:143:43 | sql | semmle.label | sql |
+| Test.java:147:24:147:51 | keyword : String | semmle.label | keyword : String |
+| Test.java:149:35:149:38 | jpql | semmle.label | jpql |
+| Test.java:181:33:181:60 | keyword : String | semmle.label | keyword : String |
+| Test.java:182:32:182:38 | keyword : String | semmle.label | keyword : String |
+| Test.java:186:33:186:60 | keyword : String | semmle.label | keyword : String |
+| Test.java:187:33:187:39 | keyword : String | semmle.label | keyword : String |
+| Test.java:191:28:191:55 | keyword : String | semmle.label | keyword : String |
+| Test.java:192:22:192:46 | buildUnsafeWhere(...) : String | semmle.label | buildUnsafeWhere(...) : String |
+| Test.java:192:39:192:45 | keyword : String | semmle.label | keyword : String |
+| Test.java:193:24:193:26 | sql : String | semmle.label | sql : String |
+| Test.java:200:29:200:42 | keyword : String | semmle.label | keyword : String |
+| Test.java:201:16:201:67 | ... + ... : String | semmle.label | ... + ... : String |
+| Test.java:204:31:204:44 | keyword : String | semmle.label | keyword : String |
+| Test.java:205:16:205:56 | ... + ... : String | semmle.label | ... + ... : String |
+| Test.java:230:25:230:38 | keyword : String | semmle.label | keyword : String |
+| Test.java:231:42:231:48 | keyword : String | semmle.label | keyword : String |
+| Test.java:234:26:234:39 | keyword : String | semmle.label | keyword : String |
+| Test.java:235:26:235:52 | buildUnsafeOrderBy(...) : String | semmle.label | buildUnsafeOrderBy(...) : String |
+| Test.java:235:45:235:51 | keyword : String | semmle.label | keyword : String |
+| Test.java:236:35:236:37 | sql : String | semmle.label | sql : String |
+| Test.java:241:28:241:41 | keyword : String | semmle.label | keyword : String |
+| Test.java:242:26:242:50 | buildUnsafeWhere(...) : String | semmle.label | buildUnsafeWhere(...) : String |
+| Test.java:242:43:242:49 | keyword : String | semmle.label | keyword : String |
+| Test.java:243:32:243:34 | sql | semmle.label | sql |
+| Test.java:246:21:246:30 | sql : String | semmle.label | sql : String |
+| Test.java:247:32:247:34 | sql | semmle.label | sql |
+| Test.java:252:18:252:27 | sql : String | semmle.label | sql : String |
+| Test.java:253:32:253:34 | sql | semmle.label | sql |
 subpaths
+| Test.java:58:39:58:45 | keyword : String | Test.java:200:29:200:42 | keyword : String | Test.java:201:16:201:67 | ... + ... : String | Test.java:58:22:58:46 | buildUnsafeWhere(...) : String |
+| Test.java:192:39:192:45 | keyword : String | Test.java:200:29:200:42 | keyword : String | Test.java:201:16:201:67 | ... + ... : String | Test.java:192:22:192:46 | buildUnsafeWhere(...) : String |
+| Test.java:235:45:235:51 | keyword : String | Test.java:204:31:204:44 | keyword : String | Test.java:205:16:205:56 | ... + ... : String | Test.java:235:26:235:52 | buildUnsafeOrderBy(...) : String |
+| Test.java:242:43:242:49 | keyword : String | Test.java:200:29:200:42 | keyword : String | Test.java:201:16:201:67 | ... + ... : String | Test.java:242:26:242:50 | buildUnsafeWhere(...) : String |
 #select
-| Test.java:13:35:13:37 | sql | Test.java:11:27:11:51 | name : String | Test.java:13:35:13:37 | sql | Spring MVC input reaches dynamic SQL/JPQL query text. |
-| Test.java:19:35:19:37 | sql | Test.java:17:28:17:52 | sort : String | Test.java:19:35:19:37 | sql | Spring MVC input reaches dynamic SQL/JPQL query text. |
-| Test.java:27:35:27:47 | toString(...) | Test.java:23:28:23:52 | name : String | Test.java:27:35:27:47 | toString(...) | Spring MVC input reaches dynamic SQL/JPQL query text. |
-| Test.java:49:35:49:37 | sql | Test.java:43:36:43:60 | name : String | Test.java:49:35:49:37 | sql | Spring MVC input reaches dynamic SQL/JPQL query text. |
+| Test.java:33:28:33:30 | sql | Test.java:31:24:31:51 | keyword : String | Test.java:33:28:33:30 | sql | Spring MVC input reaches dynamic SQL/JPQL query text. |
+| Test.java:39:28:39:30 | sql | Test.java:37:25:37:52 | keyword : String | Test.java:39:28:39:30 | sql | Spring MVC input reaches dynamic SQL/JPQL query text. |
+| Test.java:47:28:47:40 | toString(...) | Test.java:43:31:43:58 | keyword : String | Test.java:47:28:47:40 | toString(...) | Spring MVC input reaches dynamic SQL/JPQL query text. |
+| Test.java:53:28:53:30 | sql | Test.java:51:24:51:51 | keyword : String | Test.java:53:28:53:30 | sql | Spring MVC input reaches dynamic SQL/JPQL query text. |
+| Test.java:59:28:59:30 | sql | Test.java:57:33:57:60 | keyword : String | Test.java:59:28:59:30 | sql | Spring MVC input reaches dynamic SQL/JPQL query text. |
+| Test.java:101:25:101:27 | sql | Test.java:98:35:98:62 | keyword : String | Test.java:101:25:101:27 | sql | Spring MVC input reaches dynamic SQL/JPQL query text. |
+| Test.java:108:26:108:28 | sql | Test.java:105:36:105:63 | keyword : String | Test.java:108:26:108:28 | sql | Spring MVC input reaches dynamic SQL/JPQL query text. |
+| Test.java:114:60:114:62 | sql | Test.java:112:45:112:72 | keyword : String | Test.java:114:60:114:62 | sql | Spring MVC input reaches dynamic SQL/JPQL query text. |
+| Test.java:137:35:137:38 | jpql | Test.java:135:31:135:58 | keyword : String | Test.java:137:35:137:38 | jpql | Spring MVC input reaches dynamic SQL/JPQL query text. |
+| Test.java:143:41:143:43 | sql | Test.java:141:37:141:64 | keyword : String | Test.java:143:41:143:43 | sql | Spring MVC input reaches dynamic SQL/JPQL query text. |
+| Test.java:149:35:149:38 | jpql | Test.java:147:24:147:51 | keyword : String | Test.java:149:35:149:38 | jpql | Spring MVC input reaches dynamic SQL/JPQL query text. |
+| Test.java:243:32:243:34 | sql | Test.java:181:33:181:60 | keyword : String | Test.java:243:32:243:34 | sql | Spring MVC input reaches dynamic SQL/JPQL query text. |
+| Test.java:247:32:247:34 | sql | Test.java:186:33:186:60 | keyword : String | Test.java:247:32:247:34 | sql | Spring MVC input reaches dynamic SQL/JPQL query text. |
+| Test.java:253:32:253:34 | sql | Test.java:191:28:191:55 | keyword : String | Test.java:253:32:253:34 | sql | Spring MVC input reaches dynamic SQL/JPQL query text. |
