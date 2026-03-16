@@ -4,61 +4,13 @@ import semmle.code.java.dataflow.DataFlow
 import semmle.code.java.frameworks.spring.SpringController
 import semmle.code.java.security.RequestForgery
 
-private predicate isFallbackSpringControllerAnnotation(Annotation ann) {
-  ann.getType().hasQualifiedName("org.springframework.web.bind.annotation", "RestController") or
-  ann.getType().hasQualifiedName("org.springframework.stereotype", "Controller")
-}
-
-private predicate isFallbackSpringRequestHandlerAnnotation(Annotation ann) {
-  ann.getType().hasQualifiedName("org.springframework.web.bind.annotation", "RequestMapping") or
-  ann.getType().hasQualifiedName("org.springframework.web.bind.annotation", "GetMapping") or
-  ann.getType().hasQualifiedName("org.springframework.web.bind.annotation", "PostMapping") or
-  ann.getType().hasQualifiedName("org.springframework.web.bind.annotation", "PutMapping") or
-  ann.getType().hasQualifiedName("org.springframework.web.bind.annotation", "DeleteMapping") or
-  ann.getType().hasQualifiedName("org.springframework.web.bind.annotation", "PatchMapping")
-}
-
-private predicate isFallbackSpringMvcParameterAnnotation(Annotation ann) {
-  ann.getType().hasQualifiedName("org.springframework.web.bind.annotation", "RequestParam") or
-  ann.getType().hasQualifiedName("org.springframework.web.bind.annotation", "PathVariable") or
-  ann.getType().hasQualifiedName("org.springframework.web.bind.annotation", "RequestHeader") or
-  ann.getType().hasQualifiedName("org.springframework.web.bind.annotation", "CookieValue") or
-  ann.getType().hasQualifiedName("org.springframework.web.bind.annotation", "MatrixVariable") or
-  ann.getType().hasQualifiedName("org.springframework.web.bind.annotation", "RequestBody")
-}
-
-private predicate isFallbackAnnotatedSpringMvcSourceNode(DataFlow::Node src) {
-  exists(Parameter p, Method m |
-    src = DataFlow::parameterNode(p) and
-    p.fromSource() and
-    m = p.getCallable() and
-    exists(Annotation cAnn |
-      cAnn = m.getDeclaringType().getAnAnnotation() and
-      isFallbackSpringControllerAnnotation(cAnn)
-    ) and
-    exists(Annotation mAnn |
-      mAnn = m.getAnAnnotation() and
-      isFallbackSpringRequestHandlerAnnotation(mAnn)
-    ) and
-    exists(Annotation pAnn |
-      pAnn = p.getAnAnnotation() and
-      isFallbackSpringMvcParameterAnnotation(pAnn)
-    )
-  )
-}
-
-private predicate isOfficialSpringMvcSourceNode(DataFlow::Node src) {
+predicate isOfficialSpringMvcSourceNode(DataFlow::Node src) {
   exists(SpringRequestMappingParameter p |
     src = DataFlow::parameterNode(p) and
     p.isTaintedInput()
   )
 }
 
-predicate isSpringMvcSourceNode(DataFlow::Node src) {
-  isOfficialSpringMvcSourceNode(src)
-  or
-  isFallbackAnnotatedSpringMvcSourceNode(src)
-}
 
 private predicate isStringType(Type t) {
   exists(RefType rt |
@@ -80,6 +32,7 @@ private predicate isRestClientUriSpecType(RefType t) {
   t.hasQualifiedName("org.springframework.web.client", "RestClient$RequestBodyUriSpec")
 }
 
+// client.get().uri(...), 注意, 这里只是匹配左示例的方法本身, 而不是方法调用
 private predicate isRestClientUriMethod(Method m) {
   m.hasName("uri") and
   exists(RefType t |
@@ -88,6 +41,7 @@ private predicate isRestClientUriMethod(Method m) {
   )
 }
 
+// RestClient.create(baseUrl)
 private predicate isRestClientCreateWithBaseUrl(Method m) {
   m.hasQualifiedName("org.springframework.web.client", "RestClient", "create") and
   m.getNumberOfParameters() = 1 and
@@ -97,6 +51,7 @@ private predicate isRestClientCreateWithBaseUrl(Method m) {
   )
 }
 
+// RestClient.builder().baseUrl(baseUrl)
 private predicate isRestClientBuilderBaseUrlMethod(Method m) {
   exists(RefType t |
     t = m.getDeclaringType() and
@@ -110,14 +65,7 @@ private predicate isRestClientBuilderBaseUrlMethod(Method m) {
   )
 }
 
-/**
- * 直接控制请求目标：
- *   RestClient.create(baseUrl)
- *   RestClient.builder().baseUrl(baseUrl)
- *   client.get().uri(url)
- *   client.get().uri(uri)
- *   client.get().uri("http://{host}/x", host) 的第一个参数
- */
+// 直接控制请求目标, 分为RestClient.create(baseUrl), RestClient.builder.baseUrl(baseUrl), restClient.get().uri(...)
 private class RestClientDirectTargetSink extends RequestForgerySink {
   RestClientDirectTargetSink() {
     exists(MethodCall mc |
@@ -138,28 +86,25 @@ private class RestClientDirectTargetSink extends RequestForgerySink {
   }
 }
 
-/**
- * 模板变量控制请求目标：
- *   client.get().uri("http://{host}/internal", host)
- *   client.get().uri("http://x/{id}", map)
- *
- * 这里基本照着官方对 RestTemplate uriVariables 的建模思路来。
- */
+
+// 匹配uri(..., uriVariables...)这类方法
 private class RestClientUriMethodWithUriVariablesParameter extends Method {
   int pos;
   RestClientUriMethodWithUriVariablesParameter() {
-    isRestClientUriMethod(this) and
-    this.getParameter(pos).getName() = "uriVariables"
+    isRestClientUriMethod(this) and// 先找uri方法
+    this.getParameter(pos).getName() = "uriVariables"// 再确定uriVariables位置, 注意, 位置下标从0开始
   }
 
-  int getUriVariablesPosition() { result = pos }
+  int getUriVariablesPosition() { result = pos }// 一般来说, uriVariables是连续的, 故可将pos理解为首位uriVariables的位置
 }
 
+// 取出URI模板, 如restClient.get().uri("http://{host}/internal", host), 则取出"http://{host}/internal"
 pragma[inline]
 private CompileTimeConstantExpr getConstantUrl(MethodCall mc) {
   result = mc.getArgument(0)
 }
 
+// 找placeholder, 其中idx表示placeholder的次序, offset表示某placeholder对应的偏移量
 pragma[inline]
 private predicate urlHasPlaceholderAtOffset(MethodCall mc, int idx, int offset) {
   exists(
@@ -173,9 +118,9 @@ private predicate urlHasPlaceholderAtOffset(MethodCall mc, int idx, int offset) 
 private class RestClientUriVariableSink extends RequestForgerySink {
   RestClientUriVariableSink() {
     exists(RestClientUriMethodWithUriVariablesParameter m, MethodCall mc, int i |
-      mc.getMethod() = m and
+      mc.getMethod() = m and// mc匹配带uriVariables参数的uri方法
       i >= 0 and
-      this.asExpr() = mc.getArgument(m.getUriVariablesPosition() + i) and
+      this.asExpr() = mc.getArgument(m.getUriVariablesPosition() + i) and// 匹配uri(..., uriVariables...)的若干uriVariables参数
       (
         exists(int offset |
           urlHasPlaceholderAtOffset(mc, i, offset) and
@@ -198,6 +143,7 @@ predicate isProjectSsrfSink(DataFlow::Node sink) {
   sink instanceof RestClientUriVariableSink
 }
 
+
 predicate assertAllowedGuard(Guard g, Expr e, boolean branch) {
   exists(MethodCall mc |
     mc.getMethod().hasQualifiedName("java.lang", "String", "equals") and
@@ -211,6 +157,7 @@ predicate assertAllowedGuard(Guard g, Expr e, boolean branch) {
 predicate isProjectSsrfSanitizer(DataFlow::Node node) { 
   node = DataFlow::BarrierGuard<assertAllowedGuard/3>::getABarrierNode()
  }
+
 
 /** Extension point for project-specific SSRF extra taint steps. */
 predicate isProjectSsrfFlowStep(DataFlow::Node pred, DataFlow::Node succ) { none() }

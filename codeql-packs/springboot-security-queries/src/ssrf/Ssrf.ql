@@ -18,7 +18,7 @@ import SsrfLib
 
 module SpringSsrfConfig implements DataFlow::ConfigSig {
   predicate isSource(DataFlow::Node src) {
-    isSpringMvcSourceNode(src)
+    isOfficialSpringMvcSourceNode(src)
   }
 
   predicate isSink(DataFlow::Node sink) {
