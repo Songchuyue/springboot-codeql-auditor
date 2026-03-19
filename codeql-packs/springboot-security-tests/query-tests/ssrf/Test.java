@@ -7,6 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestClient;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 
 @RestController
 public class Test {
@@ -89,5 +93,29 @@ public class Test {
     public String badRestClientTemplate(@RequestParam String host) {
         RestClient client = RestClient.create();
         return client.get().uri("http://{host}/internal", host).retrieve().body(String.class);
+    }
+
+    @GetMapping("/bad7")
+    public ResponseEntity<String> badRestTemplateExchangeRequestEntityCtor(@RequestParam String url) throws Exception {
+        RestTemplate template = new RestTemplate();
+        RequestEntity<Void> request = new RequestEntity<>(HttpMethod.GET, new URI(url));
+        return template.exchange(request, String.class);
+    }
+
+    @GetMapping("/bad8")
+    public ResponseEntity<String> badRestTemplateExchangeRequestEntityTemplate(@RequestParam String host) {
+        RestTemplate template = new RestTemplate();
+        RequestEntity<Void> request = RequestEntity.get("http://{host}/internal", host).build();
+        return template.exchange(request, String.class);
+    }
+
+    @GetMapping("/good4")
+    public ResponseEntity<String> goodRestTemplateExchangeAllowlist(@RequestParam String url) throws Exception {
+        if (!"https://api.example.com/profile".equals(url)) {
+            return null;
+        }
+        RestTemplate template = new RestTemplate();
+        RequestEntity<Void> request = new RequestEntity<>(HttpMethod.GET, new URI(url));
+        return template.exchange(request, String.class);
     }
 }
