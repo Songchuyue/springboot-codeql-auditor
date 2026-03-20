@@ -12,6 +12,8 @@ predicate isOfficialSpringMvcSourceNode(DataFlow::Node src) {
   )
 }
 
+
+// 判定该类的类型名中是否包括Logger, LogUtil, LoggingService, 但不包括org.slf4j.Logger
 private predicate isProjectLoggerLikeType(RefType t) {
   not t.hasQualifiedName("org.slf4j", "Logger") and
   (
@@ -21,6 +23,7 @@ private predicate isProjectLoggerLikeType(RefType t) {
   )
 }
 
+// 判定该方法属于Logger, LogUtil, LoggingService, 且名为trace, debug, info, warn, error, log
 private predicate isProjectLoggingMethod(Method m) {
   exists(RefType t |
     t = m.getDeclaringType() and
@@ -36,6 +39,8 @@ private predicate isProjectLoggingMethod(Method m) {
   )
 }
 
+
+// 将上一个谓词的方法的变量转为sink node
 private class ProjectLoggerSink extends LogInjectionSink {
   ProjectLoggerSink() {
     exists(MethodCall mc, Expr arg |
@@ -46,6 +51,7 @@ private class ProjectLoggerSink extends LogInjectionSink {
   }
 }
 
+// 同上
 predicate isProjectLogInjectionSink(DataFlow::Node sink) {
   sink instanceof ProjectLoggerSink
 }
