@@ -1,77 +1,88 @@
 edges
-| Test.java:16:28:16:51 | url : String | Test.java:17:58:17:60 | url : String | provenance |  |
-| Test.java:17:27:17:62 | newBuilder(...) : Builder | Test.java:17:27:18:22 | GET(...) : Builder | provenance | MaD:5010 |
-| Test.java:17:27:18:22 | GET(...) : Builder | Test.java:17:27:19:24 | build(...) : HttpRequest | provenance | MaD:5013 |
-| Test.java:17:27:19:24 | build(...) : HttpRequest | Test.java:20:21:20:23 | req | provenance | Sink:MaD:44418 |
-| Test.java:17:50:17:61 | new URI(...) : URI | Test.java:17:27:17:62 | newBuilder(...) : Builder | provenance | MaD:5027 |
-| Test.java:17:58:17:60 | url : String | Test.java:17:50:17:61 | new URI(...) | provenance | Config Sink:MaD:44419 |
-| Test.java:17:58:17:60 | url : String | Test.java:17:50:17:61 | new URI(...) | provenance | MaD:44464 Sink:MaD:44419 |
-| Test.java:17:58:17:60 | url : String | Test.java:17:50:17:61 | new URI(...) : URI | provenance | Config |
-| Test.java:17:58:17:60 | url : String | Test.java:17:50:17:61 | new URI(...) : URI | provenance | MaD:44464 |
-| Test.java:24:29:24:53 | host : String | Test.java:25:41:25:44 | host : String | provenance |  |
-| Test.java:25:19:25:74 | new URI(...) : URI | Test.java:26:50:26:52 | uri | provenance | Sink:MaD:44419 |
-| Test.java:25:19:25:74 | new URI(...) : URI | Test.java:26:50:26:52 | uri : URI | provenance |  |
-| Test.java:25:41:25:44 | host : String | Test.java:25:19:25:74 | new URI(...) : URI | provenance | Config |
-| Test.java:26:27:26:53 | newBuilder(...) : Builder | Test.java:26:27:27:22 | GET(...) : Builder | provenance | MaD:5010 |
-| Test.java:26:27:27:22 | GET(...) : Builder | Test.java:26:27:28:24 | build(...) : HttpRequest | provenance | MaD:5013 |
-| Test.java:26:27:28:24 | build(...) : HttpRequest | Test.java:29:21:29:23 | req | provenance | Sink:MaD:44418 |
-| Test.java:26:50:26:52 | uri : URI | Test.java:26:27:26:53 | newBuilder(...) : Builder | provenance | MaD:5027 |
-| Test.java:33:36:33:59 | url : String | Test.java:34:15:34:17 | url : String | provenance |  |
-| Test.java:34:15:34:17 | url : String | Test.java:37:24:37:33 | url : String | provenance |  |
-| Test.java:37:24:37:33 | url : String | Test.java:38:58:38:60 | url : String | provenance |  |
-| Test.java:38:27:38:62 | newBuilder(...) : Builder | Test.java:38:27:39:22 | GET(...) : Builder | provenance | MaD:5010 |
-| Test.java:38:27:39:22 | GET(...) : Builder | Test.java:38:27:40:24 | build(...) : HttpRequest | provenance | MaD:5013 |
-| Test.java:38:27:40:24 | build(...) : HttpRequest | Test.java:41:21:41:23 | req | provenance | Sink:MaD:44418 |
-| Test.java:38:50:38:61 | new URI(...) : URI | Test.java:38:27:38:62 | newBuilder(...) : Builder | provenance | MaD:5027 |
-| Test.java:38:58:38:60 | url : String | Test.java:38:50:38:61 | new URI(...) | provenance | Config Sink:MaD:44419 |
-| Test.java:38:58:38:60 | url : String | Test.java:38:50:38:61 | new URI(...) | provenance | MaD:44464 Sink:MaD:44419 |
-| Test.java:38:58:38:60 | url : String | Test.java:38:50:38:61 | new URI(...) : URI | provenance | Config |
-| Test.java:38:58:38:60 | url : String | Test.java:38:50:38:61 | new URI(...) : URI | provenance | MaD:44464 |
-| Test.java:77:33:77:56 | url : String | Test.java:79:33:79:35 | url | provenance |  |
-| Test.java:83:40:83:67 | baseUrl : String | Test.java:84:47:84:53 | baseUrl | provenance |  |
-| Test.java:89:41:89:65 | host : String | Test.java:91:59:91:62 | host | provenance |  |
+| Test.java:20:28:20:51 | url : String | Test.java:21:58:21:60 | url : String | provenance |  |
+| Test.java:21:27:21:62 | newBuilder(...) : Builder | Test.java:21:27:22:22 | GET(...) : Builder | provenance | MaD:5010 |
+| Test.java:21:27:22:22 | GET(...) : Builder | Test.java:21:27:23:24 | build(...) : HttpRequest | provenance | MaD:5013 |
+| Test.java:21:27:23:24 | build(...) : HttpRequest | Test.java:24:21:24:23 | req | provenance | Sink:MaD:44418 |
+| Test.java:21:50:21:61 | new URI(...) : URI | Test.java:21:27:21:62 | newBuilder(...) : Builder | provenance | MaD:5027 |
+| Test.java:21:58:21:60 | url : String | Test.java:21:50:21:61 | new URI(...) | provenance | Config Sink:MaD:44419 |
+| Test.java:21:58:21:60 | url : String | Test.java:21:50:21:61 | new URI(...) | provenance | MaD:44464 Sink:MaD:44419 |
+| Test.java:21:58:21:60 | url : String | Test.java:21:50:21:61 | new URI(...) : URI | provenance | Config |
+| Test.java:21:58:21:60 | url : String | Test.java:21:50:21:61 | new URI(...) : URI | provenance | MaD:44464 |
+| Test.java:28:29:28:53 | host : String | Test.java:29:41:29:44 | host : String | provenance |  |
+| Test.java:29:19:29:74 | new URI(...) : URI | Test.java:30:50:30:52 | uri | provenance | Sink:MaD:44419 |
+| Test.java:29:19:29:74 | new URI(...) : URI | Test.java:30:50:30:52 | uri : URI | provenance |  |
+| Test.java:29:41:29:44 | host : String | Test.java:29:19:29:74 | new URI(...) : URI | provenance | Config |
+| Test.java:30:27:30:53 | newBuilder(...) : Builder | Test.java:30:27:31:22 | GET(...) : Builder | provenance | MaD:5010 |
+| Test.java:30:27:31:22 | GET(...) : Builder | Test.java:30:27:32:24 | build(...) : HttpRequest | provenance | MaD:5013 |
+| Test.java:30:27:32:24 | build(...) : HttpRequest | Test.java:33:21:33:23 | req | provenance | Sink:MaD:44418 |
+| Test.java:30:50:30:52 | uri : URI | Test.java:30:27:30:53 | newBuilder(...) : Builder | provenance | MaD:5027 |
+| Test.java:37:36:37:59 | url : String | Test.java:38:15:38:17 | url : String | provenance |  |
+| Test.java:38:15:38:17 | url : String | Test.java:41:24:41:33 | url : String | provenance |  |
+| Test.java:41:24:41:33 | url : String | Test.java:42:58:42:60 | url : String | provenance |  |
+| Test.java:42:27:42:62 | newBuilder(...) : Builder | Test.java:42:27:43:22 | GET(...) : Builder | provenance | MaD:5010 |
+| Test.java:42:27:43:22 | GET(...) : Builder | Test.java:42:27:44:24 | build(...) : HttpRequest | provenance | MaD:5013 |
+| Test.java:42:27:44:24 | build(...) : HttpRequest | Test.java:45:21:45:23 | req | provenance | Sink:MaD:44418 |
+| Test.java:42:50:42:61 | new URI(...) : URI | Test.java:42:27:42:62 | newBuilder(...) : Builder | provenance | MaD:5027 |
+| Test.java:42:58:42:60 | url : String | Test.java:42:50:42:61 | new URI(...) | provenance | Config Sink:MaD:44419 |
+| Test.java:42:58:42:60 | url : String | Test.java:42:50:42:61 | new URI(...) | provenance | MaD:44464 Sink:MaD:44419 |
+| Test.java:42:58:42:60 | url : String | Test.java:42:50:42:61 | new URI(...) : URI | provenance | Config |
+| Test.java:42:58:42:60 | url : String | Test.java:42:50:42:61 | new URI(...) : URI | provenance | MaD:44464 |
+| Test.java:81:33:81:56 | url : String | Test.java:83:33:83:35 | url | provenance |  |
+| Test.java:87:40:87:67 | baseUrl : String | Test.java:88:47:88:53 | baseUrl | provenance |  |
+| Test.java:93:41:93:65 | host : String | Test.java:95:59:95:62 | host | provenance |  |
+| Test.java:99:76:99:99 | url : String | Test.java:101:83:101:85 | url : String | provenance |  |
+| Test.java:101:83:101:85 | url : String | Test.java:101:75:101:86 | new URI(...) | provenance | Config Sink:MaD:50890 |
+| Test.java:101:83:101:85 | url : String | Test.java:101:75:101:86 | new URI(...) | provenance | MaD:44464 Sink:MaD:50890 |
+| Test.java:106:80:106:104 | host : String | Test.java:108:83:108:86 | host | provenance |  |
 nodes
-| Test.java:16:28:16:51 | url : String | semmle.label | url : String |
-| Test.java:17:27:17:62 | newBuilder(...) : Builder | semmle.label | newBuilder(...) : Builder |
-| Test.java:17:27:18:22 | GET(...) : Builder | semmle.label | GET(...) : Builder |
-| Test.java:17:27:19:24 | build(...) : HttpRequest | semmle.label | build(...) : HttpRequest |
-| Test.java:17:50:17:61 | new URI(...) | semmle.label | new URI(...) |
-| Test.java:17:50:17:61 | new URI(...) : URI | semmle.label | new URI(...) : URI |
-| Test.java:17:58:17:60 | url : String | semmle.label | url : String |
-| Test.java:20:21:20:23 | req | semmle.label | req |
-| Test.java:24:29:24:53 | host : String | semmle.label | host : String |
-| Test.java:25:19:25:74 | new URI(...) : URI | semmle.label | new URI(...) : URI |
-| Test.java:25:41:25:44 | host : String | semmle.label | host : String |
-| Test.java:26:27:26:53 | newBuilder(...) : Builder | semmle.label | newBuilder(...) : Builder |
-| Test.java:26:27:27:22 | GET(...) : Builder | semmle.label | GET(...) : Builder |
-| Test.java:26:27:28:24 | build(...) : HttpRequest | semmle.label | build(...) : HttpRequest |
-| Test.java:26:50:26:52 | uri | semmle.label | uri |
-| Test.java:26:50:26:52 | uri : URI | semmle.label | uri : URI |
-| Test.java:29:21:29:23 | req | semmle.label | req |
-| Test.java:33:36:33:59 | url : String | semmle.label | url : String |
-| Test.java:34:15:34:17 | url : String | semmle.label | url : String |
-| Test.java:37:24:37:33 | url : String | semmle.label | url : String |
-| Test.java:38:27:38:62 | newBuilder(...) : Builder | semmle.label | newBuilder(...) : Builder |
-| Test.java:38:27:39:22 | GET(...) : Builder | semmle.label | GET(...) : Builder |
-| Test.java:38:27:40:24 | build(...) : HttpRequest | semmle.label | build(...) : HttpRequest |
-| Test.java:38:50:38:61 | new URI(...) | semmle.label | new URI(...) |
-| Test.java:38:50:38:61 | new URI(...) : URI | semmle.label | new URI(...) : URI |
-| Test.java:38:58:38:60 | url : String | semmle.label | url : String |
-| Test.java:41:21:41:23 | req | semmle.label | req |
-| Test.java:77:33:77:56 | url : String | semmle.label | url : String |
-| Test.java:79:33:79:35 | url | semmle.label | url |
-| Test.java:83:40:83:67 | baseUrl : String | semmle.label | baseUrl : String |
-| Test.java:84:47:84:53 | baseUrl | semmle.label | baseUrl |
-| Test.java:89:41:89:65 | host : String | semmle.label | host : String |
-| Test.java:91:59:91:62 | host | semmle.label | host |
+| Test.java:20:28:20:51 | url : String | semmle.label | url : String |
+| Test.java:21:27:21:62 | newBuilder(...) : Builder | semmle.label | newBuilder(...) : Builder |
+| Test.java:21:27:22:22 | GET(...) : Builder | semmle.label | GET(...) : Builder |
+| Test.java:21:27:23:24 | build(...) : HttpRequest | semmle.label | build(...) : HttpRequest |
+| Test.java:21:50:21:61 | new URI(...) | semmle.label | new URI(...) |
+| Test.java:21:50:21:61 | new URI(...) : URI | semmle.label | new URI(...) : URI |
+| Test.java:21:58:21:60 | url : String | semmle.label | url : String |
+| Test.java:24:21:24:23 | req | semmle.label | req |
+| Test.java:28:29:28:53 | host : String | semmle.label | host : String |
+| Test.java:29:19:29:74 | new URI(...) : URI | semmle.label | new URI(...) : URI |
+| Test.java:29:41:29:44 | host : String | semmle.label | host : String |
+| Test.java:30:27:30:53 | newBuilder(...) : Builder | semmle.label | newBuilder(...) : Builder |
+| Test.java:30:27:31:22 | GET(...) : Builder | semmle.label | GET(...) : Builder |
+| Test.java:30:27:32:24 | build(...) : HttpRequest | semmle.label | build(...) : HttpRequest |
+| Test.java:30:50:30:52 | uri | semmle.label | uri |
+| Test.java:30:50:30:52 | uri : URI | semmle.label | uri : URI |
+| Test.java:33:21:33:23 | req | semmle.label | req |
+| Test.java:37:36:37:59 | url : String | semmle.label | url : String |
+| Test.java:38:15:38:17 | url : String | semmle.label | url : String |
+| Test.java:41:24:41:33 | url : String | semmle.label | url : String |
+| Test.java:42:27:42:62 | newBuilder(...) : Builder | semmle.label | newBuilder(...) : Builder |
+| Test.java:42:27:43:22 | GET(...) : Builder | semmle.label | GET(...) : Builder |
+| Test.java:42:27:44:24 | build(...) : HttpRequest | semmle.label | build(...) : HttpRequest |
+| Test.java:42:50:42:61 | new URI(...) | semmle.label | new URI(...) |
+| Test.java:42:50:42:61 | new URI(...) : URI | semmle.label | new URI(...) : URI |
+| Test.java:42:58:42:60 | url : String | semmle.label | url : String |
+| Test.java:45:21:45:23 | req | semmle.label | req |
+| Test.java:81:33:81:56 | url : String | semmle.label | url : String |
+| Test.java:83:33:83:35 | url | semmle.label | url |
+| Test.java:87:40:87:67 | baseUrl : String | semmle.label | baseUrl : String |
+| Test.java:88:47:88:53 | baseUrl | semmle.label | baseUrl |
+| Test.java:93:41:93:65 | host : String | semmle.label | host : String |
+| Test.java:95:59:95:62 | host | semmle.label | host |
+| Test.java:99:76:99:99 | url : String | semmle.label | url : String |
+| Test.java:101:75:101:86 | new URI(...) | semmle.label | new URI(...) |
+| Test.java:101:83:101:85 | url : String | semmle.label | url : String |
+| Test.java:106:80:106:104 | host : String | semmle.label | host : String |
+| Test.java:108:83:108:86 | host | semmle.label | host |
 subpaths
 #select
-| Test.java:17:50:17:61 | new URI(...) | Test.java:16:28:16:51 | url : String | Test.java:17:50:17:61 | new URI(...) | Spring MVC input reaches an outgoing request target. |
-| Test.java:20:21:20:23 | req | Test.java:16:28:16:51 | url : String | Test.java:20:21:20:23 | req | Spring MVC input reaches an outgoing request target. |
-| Test.java:26:50:26:52 | uri | Test.java:24:29:24:53 | host : String | Test.java:26:50:26:52 | uri | Spring MVC input reaches an outgoing request target. |
-| Test.java:29:21:29:23 | req | Test.java:24:29:24:53 | host : String | Test.java:29:21:29:23 | req | Spring MVC input reaches an outgoing request target. |
-| Test.java:38:50:38:61 | new URI(...) | Test.java:33:36:33:59 | url : String | Test.java:38:50:38:61 | new URI(...) | Spring MVC input reaches an outgoing request target. |
-| Test.java:41:21:41:23 | req | Test.java:33:36:33:59 | url : String | Test.java:41:21:41:23 | req | Spring MVC input reaches an outgoing request target. |
-| Test.java:79:33:79:35 | url | Test.java:77:33:77:56 | url : String | Test.java:79:33:79:35 | url | Spring MVC input reaches an outgoing request target. |
-| Test.java:84:47:84:53 | baseUrl | Test.java:83:40:83:67 | baseUrl : String | Test.java:84:47:84:53 | baseUrl | Spring MVC input reaches an outgoing request target. |
-| Test.java:91:59:91:62 | host | Test.java:89:41:89:65 | host : String | Test.java:91:59:91:62 | host | Spring MVC input reaches an outgoing request target. |
+| Test.java:21:50:21:61 | new URI(...) | Test.java:20:28:20:51 | url : String | Test.java:21:50:21:61 | new URI(...) | Spring MVC input reaches an outgoing request target. |
+| Test.java:24:21:24:23 | req | Test.java:20:28:20:51 | url : String | Test.java:24:21:24:23 | req | Spring MVC input reaches an outgoing request target. |
+| Test.java:30:50:30:52 | uri | Test.java:28:29:28:53 | host : String | Test.java:30:50:30:52 | uri | Spring MVC input reaches an outgoing request target. |
+| Test.java:33:21:33:23 | req | Test.java:28:29:28:53 | host : String | Test.java:33:21:33:23 | req | Spring MVC input reaches an outgoing request target. |
+| Test.java:42:50:42:61 | new URI(...) | Test.java:37:36:37:59 | url : String | Test.java:42:50:42:61 | new URI(...) | Spring MVC input reaches an outgoing request target. |
+| Test.java:45:21:45:23 | req | Test.java:37:36:37:59 | url : String | Test.java:45:21:45:23 | req | Spring MVC input reaches an outgoing request target. |
+| Test.java:83:33:83:35 | url | Test.java:81:33:81:56 | url : String | Test.java:83:33:83:35 | url | Spring MVC input reaches an outgoing request target. |
+| Test.java:88:47:88:53 | baseUrl | Test.java:87:40:87:67 | baseUrl : String | Test.java:88:47:88:53 | baseUrl | Spring MVC input reaches an outgoing request target. |
+| Test.java:95:59:95:62 | host | Test.java:93:41:93:65 | host : String | Test.java:95:59:95:62 | host | Spring MVC input reaches an outgoing request target. |
+| Test.java:101:75:101:86 | new URI(...) | Test.java:99:76:99:99 | url : String | Test.java:101:75:101:86 | new URI(...) | Spring MVC input reaches an outgoing request target. |
+| Test.java:108:83:108:86 | host | Test.java:106:80:106:104 | host : String | Test.java:108:83:108:86 | host | Spring MVC input reaches an outgoing request target. |

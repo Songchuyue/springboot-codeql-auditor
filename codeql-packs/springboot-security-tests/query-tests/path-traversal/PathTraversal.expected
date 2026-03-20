@@ -1,0 +1,41 @@
+edges
+| Test.java:15:27:15:51 | name : String | Test.java:16:55:16:58 | name : String | provenance |  |
+| Test.java:16:35:16:59 | new ..[] { .. } : String[] [[]] : String | Test.java:16:35:16:59 | get(...) | provenance | MaD:44576 Sink:MaD:44531 |
+| Test.java:16:55:16:58 | name : String | Test.java:16:35:16:59 | new ..[] { .. } : String[] [[]] : String | provenance |  |
+| Test.java:20:26:20:50 | name : String | Test.java:21:41:21:44 | name : String | provenance |  |
+| Test.java:21:21:21:45 | new ..[] { .. } : String[] [[]] : String | Test.java:21:21:21:45 | get(...) | provenance | MaD:44576 Sink:MaD:44536 |
+| Test.java:21:41:21:44 | name : String | Test.java:21:21:21:45 | new ..[] { .. } : String[] [[]] : String | provenance |  |
+| Test.java:25:26:25:50 | name : String | Test.java:26:50:26:70 | ... + ... | provenance | Sink:MaD:44022 |
+| Test.java:33:38:33:62 | name : String | Test.java:34:42:34:45 | name : String | provenance |  |
+| Test.java:34:18:34:46 | buildUserControlledPath(...) : Path | Test.java:35:35:35:35 | p | provenance | Sink:MaD:44531 |
+| Test.java:34:42:34:45 | name : String | Test.java:34:18:34:46 | buildUserControlledPath(...) : Path | provenance | MaD:44576 |
+| Test.java:34:42:34:45 | name : String | Test.java:57:42:57:52 | name : String | provenance |  |
+| Test.java:57:42:57:52 | name : String | Test.java:58:36:58:39 | name : String | provenance |  |
+| Test.java:58:16:58:40 | new ..[] { .. } : String[] [[]] : String | Test.java:58:16:58:40 | get(...) : Path | provenance | MaD:44576 |
+| Test.java:58:36:58:39 | name : String | Test.java:58:16:58:40 | new ..[] { .. } : String[] [[]] : String | provenance |  |
+nodes
+| Test.java:15:27:15:51 | name : String | semmle.label | name : String |
+| Test.java:16:35:16:59 | get(...) | semmle.label | get(...) |
+| Test.java:16:35:16:59 | new ..[] { .. } : String[] [[]] : String | semmle.label | new ..[] { .. } : String[] [[]] : String |
+| Test.java:16:55:16:58 | name : String | semmle.label | name : String |
+| Test.java:20:26:20:50 | name : String | semmle.label | name : String |
+| Test.java:21:21:21:45 | get(...) | semmle.label | get(...) |
+| Test.java:21:21:21:45 | new ..[] { .. } : String[] [[]] : String | semmle.label | new ..[] { .. } : String[] [[]] : String |
+| Test.java:21:41:21:44 | name : String | semmle.label | name : String |
+| Test.java:25:26:25:50 | name : String | semmle.label | name : String |
+| Test.java:26:50:26:70 | ... + ... | semmle.label | ... + ... |
+| Test.java:33:38:33:62 | name : String | semmle.label | name : String |
+| Test.java:34:18:34:46 | buildUserControlledPath(...) : Path | semmle.label | buildUserControlledPath(...) : Path |
+| Test.java:34:42:34:45 | name : String | semmle.label | name : String |
+| Test.java:35:35:35:35 | p | semmle.label | p |
+| Test.java:57:42:57:52 | name : String | semmle.label | name : String |
+| Test.java:58:16:58:40 | get(...) : Path | semmle.label | get(...) : Path |
+| Test.java:58:16:58:40 | new ..[] { .. } : String[] [[]] : String | semmle.label | new ..[] { .. } : String[] [[]] : String |
+| Test.java:58:36:58:39 | name : String | semmle.label | name : String |
+subpaths
+| Test.java:34:42:34:45 | name : String | Test.java:57:42:57:52 | name : String | Test.java:58:16:58:40 | get(...) : Path | Test.java:34:18:34:46 | buildUserControlledPath(...) : Path |
+#select
+| Test.java:16:35:16:59 | get(...) | Test.java:15:27:15:51 | name : String | Test.java:16:35:16:59 | get(...) | Spring MVC input reaches a file-system access path. |
+| Test.java:21:21:21:45 | get(...) | Test.java:20:26:20:50 | name : String | Test.java:21:21:21:45 | get(...) | Spring MVC input reaches a file-system access path. |
+| Test.java:26:50:26:70 | ... + ... | Test.java:25:26:25:50 | name : String | Test.java:26:50:26:70 | ... + ... | Spring MVC input reaches a file-system access path. |
+| Test.java:35:35:35:35 | p | Test.java:33:38:33:62 | name : String | Test.java:35:35:35:35 | p | Spring MVC input reaches a file-system access path. |

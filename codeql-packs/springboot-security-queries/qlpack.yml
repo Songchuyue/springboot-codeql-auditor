@@ -2,3 +2,4 @@ name: scy/springboot-security-queries
 version: 0.0.1
 dependencies:
   codeql/java-queries: "*"
+defaultSuiteFile: suites/default.qls

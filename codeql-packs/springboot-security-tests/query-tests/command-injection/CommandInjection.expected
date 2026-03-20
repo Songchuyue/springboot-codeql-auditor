@@ -1,0 +1,83 @@
+edges
+| Test.java:18:25:18:48 | cmd : String | Test.java:19:35:19:37 | cmd | provenance | Sink:MaD:44157 |
+| Test.java:23:27:23:51 | file : String | Test.java:24:35:24:66 | ... + ... | provenance | Sink:MaD:44157 |
+| Test.java:28:28:28:52 | file : String | Test.java:30:19:30:22 | file : String | provenance |  |
+| Test.java:30:9:30:10 | sb [post update] : StringBuilder | Test.java:31:9:31:10 | sb : StringBuilder | provenance |  |
+| Test.java:30:19:30:22 | file : String | Test.java:30:9:30:10 | sb [post update] : StringBuilder | provenance | Config |
+| Test.java:30:19:30:22 | file : String | Test.java:30:9:30:10 | sb [post update] : StringBuilder | provenance | MaD:44184 |
+| Test.java:31:9:31:10 | sb : StringBuilder | Test.java:31:9:31:10 | sb [post update] : StringBuilder | provenance | Config |
+| Test.java:31:9:31:10 | sb : StringBuilder | Test.java:32:35:32:36 | sb : StringBuilder | provenance |  |
+| Test.java:31:9:31:10 | sb [post update] : StringBuilder | Test.java:32:35:32:36 | sb : StringBuilder | provenance |  |
+| Test.java:32:35:32:36 | sb : StringBuilder | Test.java:32:35:32:47 | toString(...) | provenance | Config Sink:MaD:44157 |
+| Test.java:32:35:32:36 | sb : StringBuilder | Test.java:32:35:32:47 | toString(...) | provenance | MaD:44199 Sink:MaD:44157 |
+| Test.java:36:27:36:51 | file : String | Test.java:37:60:37:63 | file : String | provenance |  |
+| Test.java:37:22:37:64 | format(...) : String | Test.java:38:35:38:37 | cmd | provenance | Sink:MaD:44157 |
+| Test.java:37:22:37:64 | new ..[] { .. } : Object[] [[]] : String | Test.java:37:22:37:64 | format(...) : String | provenance | MaD:44224 |
+| Test.java:37:60:37:63 | file : String | Test.java:37:22:37:64 | format(...) : String | provenance | Config |
+| Test.java:37:60:37:63 | file : String | Test.java:37:22:37:64 | new ..[] { .. } : Object[] [[]] : String | provenance |  |
+| Test.java:47:34:47:57 | cmd : String | Test.java:48:49:48:51 | cmd : String | provenance |  |
+| Test.java:48:29:48:52 | of(...) : List | Test.java:49:28:49:31 | argv | provenance | Sink:MaD:44153 |
+| Test.java:48:29:48:52 | of(...) : List [<element>] : String | Test.java:49:28:49:31 | argv | provenance | Sink:MaD:44153 |
+| Test.java:48:49:48:51 | cmd : String | Test.java:48:29:48:52 | of(...) : List | provenance | Config |
+| Test.java:48:49:48:51 | cmd : String | Test.java:48:29:48:52 | of(...) : List [<element>] : String | provenance | MaD:45373 |
+| Test.java:53:34:53:57 | cmd : String | Test.java:54:60:54:62 | cmd : String | provenance |  |
+| Test.java:54:29:54:63 | asList(...) : List | Test.java:55:28:55:31 | argv | provenance | Sink:MaD:44153 |
+| Test.java:54:29:54:63 | asList(...) : List [<element>] : String | Test.java:55:28:55:31 | argv | provenance | Sink:MaD:44153 |
+| Test.java:54:29:54:63 | new ..[] { .. } : Object[] [[]] : String | Test.java:54:29:54:63 | asList(...) : List [<element>] : String | provenance | MaD:45231 |
+| Test.java:54:60:54:62 | cmd : String | Test.java:54:29:54:63 | asList(...) : List | provenance | Config |
+| Test.java:54:60:54:62 | cmd : String | Test.java:54:29:54:63 | new ..[] { .. } : Object[] [[]] : String | provenance |  |
+| Test.java:59:39:59:62 | cmd : String | Test.java:61:40:61:42 | cmd : String | provenance |  |
+| Test.java:61:40:61:42 | cmd : String | Test.java:61:20:61:43 | of(...) | provenance | Config Sink:MaD:44150 |
+| Test.java:61:40:61:42 | cmd : String | Test.java:61:20:61:43 | of(...) | provenance | MaD:45373 Sink:MaD:44150 |
+| Test.java:70:29:70:52 | cmd : String | Test.java:71:28:71:30 | cmd : String | provenance |  |
+| Test.java:71:28:71:30 | cmd : String | Test.java:102:18:102:27 | cmd : String | provenance |  |
+| Test.java:102:18:102:27 | cmd : String | Test.java:103:42:103:44 | cmd : String | provenance |  |
+| Test.java:103:42:103:44 | cmd : String | Test.java:108:19:108:28 | cmd : String | provenance |  |
+| Test.java:108:19:108:28 | cmd : String | Test.java:109:39:109:41 | cmd | provenance | Sink:MaD:44157 |
+nodes
+| Test.java:18:25:18:48 | cmd : String | semmle.label | cmd : String |
+| Test.java:19:35:19:37 | cmd | semmle.label | cmd |
+| Test.java:23:27:23:51 | file : String | semmle.label | file : String |
+| Test.java:24:35:24:66 | ... + ... | semmle.label | ... + ... |
+| Test.java:28:28:28:52 | file : String | semmle.label | file : String |
+| Test.java:30:9:30:10 | sb [post update] : StringBuilder | semmle.label | sb [post update] : StringBuilder |
+| Test.java:30:19:30:22 | file : String | semmle.label | file : String |
+| Test.java:31:9:31:10 | sb : StringBuilder | semmle.label | sb : StringBuilder |
+| Test.java:31:9:31:10 | sb [post update] : StringBuilder | semmle.label | sb [post update] : StringBuilder |
+| Test.java:32:35:32:36 | sb : StringBuilder | semmle.label | sb : StringBuilder |
+| Test.java:32:35:32:47 | toString(...) | semmle.label | toString(...) |
+| Test.java:36:27:36:51 | file : String | semmle.label | file : String |
+| Test.java:37:22:37:64 | format(...) : String | semmle.label | format(...) : String |
+| Test.java:37:22:37:64 | new ..[] { .. } : Object[] [[]] : String | semmle.label | new ..[] { .. } : Object[] [[]] : String |
+| Test.java:37:60:37:63 | file : String | semmle.label | file : String |
+| Test.java:38:35:38:37 | cmd | semmle.label | cmd |
+| Test.java:47:34:47:57 | cmd : String | semmle.label | cmd : String |
+| Test.java:48:29:48:52 | of(...) : List | semmle.label | of(...) : List |
+| Test.java:48:29:48:52 | of(...) : List [<element>] : String | semmle.label | of(...) : List [<element>] : String |
+| Test.java:48:49:48:51 | cmd : String | semmle.label | cmd : String |
+| Test.java:49:28:49:31 | argv | semmle.label | argv |
+| Test.java:53:34:53:57 | cmd : String | semmle.label | cmd : String |
+| Test.java:54:29:54:63 | asList(...) : List | semmle.label | asList(...) : List |
+| Test.java:54:29:54:63 | asList(...) : List [<element>] : String | semmle.label | asList(...) : List [<element>] : String |
+| Test.java:54:29:54:63 | new ..[] { .. } : Object[] [[]] : String | semmle.label | new ..[] { .. } : Object[] [[]] : String |
+| Test.java:54:60:54:62 | cmd : String | semmle.label | cmd : String |
+| Test.java:55:28:55:31 | argv | semmle.label | argv |
+| Test.java:59:39:59:62 | cmd : String | semmle.label | cmd : String |
+| Test.java:61:20:61:43 | of(...) | semmle.label | of(...) |
+| Test.java:61:40:61:42 | cmd : String | semmle.label | cmd : String |
+| Test.java:70:29:70:52 | cmd : String | semmle.label | cmd : String |
+| Test.java:71:28:71:30 | cmd : String | semmle.label | cmd : String |
+| Test.java:102:18:102:27 | cmd : String | semmle.label | cmd : String |
+| Test.java:103:42:103:44 | cmd : String | semmle.label | cmd : String |
+| Test.java:108:19:108:28 | cmd : String | semmle.label | cmd : String |
+| Test.java:109:39:109:41 | cmd | semmle.label | cmd |
+subpaths
+#select
+| Test.java:19:35:19:37 | cmd | Test.java:18:25:18:48 | cmd : String | Test.java:19:35:19:37 | cmd | Spring MVC input reaches OS command execution. |
+| Test.java:24:35:24:66 | ... + ... | Test.java:23:27:23:51 | file : String | Test.java:24:35:24:66 | ... + ... | Spring MVC input reaches OS command execution. |
+| Test.java:32:35:32:47 | toString(...) | Test.java:28:28:28:52 | file : String | Test.java:32:35:32:47 | toString(...) | Spring MVC input reaches OS command execution. |
+| Test.java:38:35:38:37 | cmd | Test.java:36:27:36:51 | file : String | Test.java:38:35:38:37 | cmd | Spring MVC input reaches OS command execution. |
+| Test.java:49:28:49:31 | argv | Test.java:47:34:47:57 | cmd : String | Test.java:49:28:49:31 | argv | Spring MVC input reaches OS command execution. |
+| Test.java:55:28:55:31 | argv | Test.java:53:34:53:57 | cmd : String | Test.java:55:28:55:31 | argv | Spring MVC input reaches OS command execution. |
+| Test.java:61:20:61:43 | of(...) | Test.java:59:39:59:62 | cmd : String | Test.java:61:20:61:43 | of(...) | Spring MVC input reaches OS command execution. |
+| Test.java:109:39:109:41 | cmd | Test.java:70:29:70:52 | cmd : String | Test.java:109:39:109:41 | cmd | Spring MVC input reaches OS command execution. |

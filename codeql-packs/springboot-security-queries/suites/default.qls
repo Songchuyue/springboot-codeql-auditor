@@ -1,0 +1,9 @@
+- description: Stable seven security queries for current stage
+
+- query: src/sql-injection/SqlInjection.ql
+- query: src/ssrf/Ssrf.ql
+- query: src/command-injection/CommandInjection.ql
+- query: src/path-traversal/PathTraversal.ql
+- query: src/xss/Xss.ql
+- query: src/log-injection/LogInjection.ql
+- query: src/unsafe-deserialization/UnsafeDeserialization.ql

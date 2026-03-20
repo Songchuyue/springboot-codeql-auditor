@@ -1,0 +1,103 @@
+edges
+| Test.java:24:32:24:59 | payload : String | Test.java:25:51:25:57 | payload : String | provenance |  |
+| Test.java:25:24:25:58 | decode(...) : byte[] | Test.java:26:55:26:85 | new ByteArrayInputStream(...) : ByteArrayInputStream | provenance | inputStreamWrapper |
+| Test.java:25:24:25:58 | decode(...) : byte[] | Test.java:26:80:26:84 | bytes : byte[] | provenance |  |
+| Test.java:25:24:25:58 | decode(...) : byte[] | Test.java:27:16:27:18 | ois | provenance | inputStreamWrapper |
+| Test.java:25:51:25:57 | payload : String | Test.java:25:24:25:58 | decode(...) : byte[] | provenance | MaD:45255 |
+| Test.java:26:33:26:86 | new ObjectInputStream(...) : ObjectInputStream | Test.java:27:16:27:18 | ois | provenance |  |
+| Test.java:26:55:26:85 | new ByteArrayInputStream(...) : ByteArrayInputStream | Test.java:26:33:26:86 | new ObjectInputStream(...) : ObjectInputStream | provenance | MaD:44109 |
+| Test.java:26:55:26:85 | new ByteArrayInputStream(...) : ByteArrayInputStream | Test.java:27:16:27:18 | ois | provenance | inputStreamWrapper |
+| Test.java:26:80:26:84 | bytes : byte[] | Test.java:26:55:26:85 | new ByteArrayInputStream(...) : ByteArrayInputStream | provenance | MaD:44069 |
+| Test.java:31:34:31:61 | payload : String | Test.java:32:31:32:37 | payload : String | provenance |  |
+| Test.java:32:24:32:38 | decode(...) : byte[] | Test.java:33:52:33:56 | bytes : byte[] | provenance |  |
+| Test.java:32:24:32:38 | decode(...) : byte[] | Test.java:34:55:34:82 | new BufferedInputStream(...) : BufferedInputStream | provenance | inputStreamWrapper |
+| Test.java:32:24:32:38 | decode(...) : byte[] | Test.java:34:79:34:81 | raw : ByteArrayInputStream | provenance | inputStreamWrapper |
+| Test.java:32:24:32:38 | decode(...) : byte[] | Test.java:35:16:35:18 | ois | provenance | inputStreamWrapper |
+| Test.java:32:31:32:37 | payload : String | Test.java:32:24:32:38 | decode(...) : byte[] | provenance | MaD:45255 |
+| Test.java:32:31:32:37 | payload : String | Test.java:92:19:92:32 | payload : String | provenance |  |
+| Test.java:33:27:33:57 | new ByteArrayInputStream(...) : ByteArrayInputStream | Test.java:34:55:34:82 | new BufferedInputStream(...) : BufferedInputStream | provenance | inputStreamWrapper |
+| Test.java:33:27:33:57 | new ByteArrayInputStream(...) : ByteArrayInputStream | Test.java:34:79:34:81 | raw : ByteArrayInputStream | provenance |  |
+| Test.java:33:27:33:57 | new ByteArrayInputStream(...) : ByteArrayInputStream | Test.java:35:16:35:18 | ois | provenance | inputStreamWrapper |
+| Test.java:33:52:33:56 | bytes : byte[] | Test.java:33:27:33:57 | new ByteArrayInputStream(...) : ByteArrayInputStream | provenance | MaD:44069 |
+| Test.java:34:33:34:83 | new ObjectInputStream(...) : ObjectInputStream | Test.java:35:16:35:18 | ois | provenance |  |
+| Test.java:34:55:34:82 | new BufferedInputStream(...) : BufferedInputStream | Test.java:34:33:34:83 | new ObjectInputStream(...) : ObjectInputStream | provenance | MaD:44109 |
+| Test.java:34:55:34:82 | new BufferedInputStream(...) : BufferedInputStream | Test.java:35:16:35:18 | ois | provenance | inputStreamWrapper |
+| Test.java:34:79:34:81 | raw : ByteArrayInputStream | Test.java:34:55:34:82 | new BufferedInputStream(...) : BufferedInputStream | provenance | MaD:44066 |
+| Test.java:43:29:43:56 | payload : String | Test.java:44:50:44:56 | payload : String | provenance |  |
+| Test.java:44:33:44:57 | openUnsafeStream(...) : ObjectInputStream | Test.java:45:16:45:18 | ois | provenance |  |
+| Test.java:44:50:44:56 | payload : String | Test.java:44:33:44:57 | openUnsafeStream(...) : ObjectInputStream | provenance | MaD:45255 |
+| Test.java:44:50:44:56 | payload : String | Test.java:96:40:96:53 | payload : String | provenance |  |
+| Test.java:49:35:49:62 | payload : String | Test.java:50:47:50:53 | payload : String | provenance |  |
+| Test.java:50:47:50:53 | payload : String | Test.java:102:28:102:41 | payload : String | provenance |  |
+| Test.java:92:19:92:32 | payload : String | Test.java:93:43:93:49 | payload : String | provenance |  |
+| Test.java:93:43:93:49 | payload : String | Test.java:93:16:93:50 | decode(...) : byte[] | provenance | MaD:45255 |
+| Test.java:96:40:96:53 | payload : String | Test.java:97:31:97:37 | payload : String | provenance |  |
+| Test.java:97:24:97:38 | decode(...) : byte[] | Test.java:98:16:98:69 | new ObjectInputStream(...) : ObjectInputStream | provenance | inputStreamWrapper |
+| Test.java:97:24:97:38 | decode(...) : byte[] | Test.java:98:38:98:68 | new ByteArrayInputStream(...) : ByteArrayInputStream | provenance | inputStreamWrapper |
+| Test.java:97:24:97:38 | decode(...) : byte[] | Test.java:98:63:98:67 | bytes : byte[] | provenance |  |
+| Test.java:97:31:97:37 | payload : String | Test.java:92:19:92:32 | payload : String | provenance |  |
+| Test.java:97:31:97:37 | payload : String | Test.java:97:24:97:38 | decode(...) : byte[] | provenance | MaD:45255 |
+| Test.java:98:38:98:68 | new ByteArrayInputStream(...) : ByteArrayInputStream | Test.java:98:16:98:69 | new ObjectInputStream(...) : ObjectInputStream | provenance | MaD:44109 |
+| Test.java:98:38:98:68 | new ByteArrayInputStream(...) : ByteArrayInputStream | Test.java:98:16:98:69 | new ObjectInputStream(...) : ObjectInputStream | provenance | inputStreamWrapper |
+| Test.java:98:63:98:67 | bytes : byte[] | Test.java:98:38:98:68 | new ByteArrayInputStream(...) : ByteArrayInputStream | provenance | MaD:44069 |
+| Test.java:102:28:102:41 | payload : String | Test.java:103:55:103:61 | payload : String | provenance |  |
+| Test.java:103:28:103:62 | decode(...) : byte[] | Test.java:104:53:104:57 | bytes : byte[] | provenance |  |
+| Test.java:103:55:103:61 | payload : String | Test.java:103:28:103:62 | decode(...) : byte[] | provenance | MaD:45255 |
+| Test.java:104:53:104:57 | bytes : byte[] | Test.java:109:21:109:32 | bytes : byte[] | provenance |  |
+| Test.java:109:21:109:32 | bytes : byte[] | Test.java:110:59:110:89 | new ByteArrayInputStream(...) : ByteArrayInputStream | provenance | inputStreamWrapper |
+| Test.java:109:21:109:32 | bytes : byte[] | Test.java:110:84:110:88 | bytes : byte[] | provenance |  |
+| Test.java:109:21:109:32 | bytes : byte[] | Test.java:111:20:111:22 | ois | provenance | inputStreamWrapper |
+| Test.java:110:37:110:90 | new ObjectInputStream(...) : ObjectInputStream | Test.java:111:20:111:22 | ois | provenance |  |
+| Test.java:110:59:110:89 | new ByteArrayInputStream(...) : ByteArrayInputStream | Test.java:110:37:110:90 | new ObjectInputStream(...) : ObjectInputStream | provenance | MaD:44109 |
+| Test.java:110:59:110:89 | new ByteArrayInputStream(...) : ByteArrayInputStream | Test.java:111:20:111:22 | ois | provenance | inputStreamWrapper |
+| Test.java:110:84:110:88 | bytes : byte[] | Test.java:110:59:110:89 | new ByteArrayInputStream(...) : ByteArrayInputStream | provenance | MaD:44069 |
+nodes
+| Test.java:24:32:24:59 | payload : String | semmle.label | payload : String |
+| Test.java:25:24:25:58 | decode(...) : byte[] | semmle.label | decode(...) : byte[] |
+| Test.java:25:51:25:57 | payload : String | semmle.label | payload : String |
+| Test.java:26:33:26:86 | new ObjectInputStream(...) : ObjectInputStream | semmle.label | new ObjectInputStream(...) : ObjectInputStream |
+| Test.java:26:55:26:85 | new ByteArrayInputStream(...) : ByteArrayInputStream | semmle.label | new ByteArrayInputStream(...) : ByteArrayInputStream |
+| Test.java:26:80:26:84 | bytes : byte[] | semmle.label | bytes : byte[] |
+| Test.java:27:16:27:18 | ois | semmle.label | ois |
+| Test.java:31:34:31:61 | payload : String | semmle.label | payload : String |
+| Test.java:32:24:32:38 | decode(...) : byte[] | semmle.label | decode(...) : byte[] |
+| Test.java:32:31:32:37 | payload : String | semmle.label | payload : String |
+| Test.java:33:27:33:57 | new ByteArrayInputStream(...) : ByteArrayInputStream | semmle.label | new ByteArrayInputStream(...) : ByteArrayInputStream |
+| Test.java:33:52:33:56 | bytes : byte[] | semmle.label | bytes : byte[] |
+| Test.java:34:33:34:83 | new ObjectInputStream(...) : ObjectInputStream | semmle.label | new ObjectInputStream(...) : ObjectInputStream |
+| Test.java:34:55:34:82 | new BufferedInputStream(...) : BufferedInputStream | semmle.label | new BufferedInputStream(...) : BufferedInputStream |
+| Test.java:34:79:34:81 | raw : ByteArrayInputStream | semmle.label | raw : ByteArrayInputStream |
+| Test.java:35:16:35:18 | ois | semmle.label | ois |
+| Test.java:43:29:43:56 | payload : String | semmle.label | payload : String |
+| Test.java:44:33:44:57 | openUnsafeStream(...) : ObjectInputStream | semmle.label | openUnsafeStream(...) : ObjectInputStream |
+| Test.java:44:50:44:56 | payload : String | semmle.label | payload : String |
+| Test.java:45:16:45:18 | ois | semmle.label | ois |
+| Test.java:49:35:49:62 | payload : String | semmle.label | payload : String |
+| Test.java:50:47:50:53 | payload : String | semmle.label | payload : String |
+| Test.java:92:19:92:32 | payload : String | semmle.label | payload : String |
+| Test.java:93:16:93:50 | decode(...) : byte[] | semmle.label | decode(...) : byte[] |
+| Test.java:93:43:93:49 | payload : String | semmle.label | payload : String |
+| Test.java:96:40:96:53 | payload : String | semmle.label | payload : String |
+| Test.java:97:24:97:38 | decode(...) : byte[] | semmle.label | decode(...) : byte[] |
+| Test.java:97:31:97:37 | payload : String | semmle.label | payload : String |
+| Test.java:98:16:98:69 | new ObjectInputStream(...) : ObjectInputStream | semmle.label | new ObjectInputStream(...) : ObjectInputStream |
+| Test.java:98:38:98:68 | new ByteArrayInputStream(...) : ByteArrayInputStream | semmle.label | new ByteArrayInputStream(...) : ByteArrayInputStream |
+| Test.java:98:63:98:67 | bytes : byte[] | semmle.label | bytes : byte[] |
+| Test.java:102:28:102:41 | payload : String | semmle.label | payload : String |
+| Test.java:103:28:103:62 | decode(...) : byte[] | semmle.label | decode(...) : byte[] |
+| Test.java:103:55:103:61 | payload : String | semmle.label | payload : String |
+| Test.java:104:53:104:57 | bytes : byte[] | semmle.label | bytes : byte[] |
+| Test.java:109:21:109:32 | bytes : byte[] | semmle.label | bytes : byte[] |
+| Test.java:110:37:110:90 | new ObjectInputStream(...) : ObjectInputStream | semmle.label | new ObjectInputStream(...) : ObjectInputStream |
+| Test.java:110:59:110:89 | new ByteArrayInputStream(...) : ByteArrayInputStream | semmle.label | new ByteArrayInputStream(...) : ByteArrayInputStream |
+| Test.java:110:84:110:88 | bytes : byte[] | semmle.label | bytes : byte[] |
+| Test.java:111:20:111:22 | ois | semmle.label | ois |
+subpaths
+| Test.java:32:31:32:37 | payload : String | Test.java:92:19:92:32 | payload : String | Test.java:93:16:93:50 | decode(...) : byte[] | Test.java:32:24:32:38 | decode(...) : byte[] |
+| Test.java:44:50:44:56 | payload : String | Test.java:96:40:96:53 | payload : String | Test.java:98:16:98:69 | new ObjectInputStream(...) : ObjectInputStream | Test.java:44:33:44:57 | openUnsafeStream(...) : ObjectInputStream |
+| Test.java:97:31:97:37 | payload : String | Test.java:92:19:92:32 | payload : String | Test.java:93:16:93:50 | decode(...) : byte[] | Test.java:97:24:97:38 | decode(...) : byte[] |
+#select
+| Test.java:27:16:27:31 | readObject(...) | Test.java:24:32:24:59 | payload : String | Test.java:27:16:27:18 | ois | Spring MVC input reaches unsafe deserialization. |
+| Test.java:35:16:35:31 | readObject(...) | Test.java:31:34:31:61 | payload : String | Test.java:35:16:35:18 | ois | Spring MVC input reaches unsafe deserialization. |
+| Test.java:45:16:45:31 | readObject(...) | Test.java:43:29:43:56 | payload : String | Test.java:45:16:45:18 | ois | Spring MVC input reaches unsafe deserialization. |
+| Test.java:111:20:111:35 | readObject(...) | Test.java:49:35:49:62 | payload : String | Test.java:111:20:111:22 | ois | Spring MVC input reaches unsafe deserialization. |

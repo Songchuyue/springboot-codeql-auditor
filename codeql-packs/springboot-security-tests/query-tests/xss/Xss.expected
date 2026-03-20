@@ -1,0 +1,47 @@
+edges
+| Test.java:13:19:13:43 | name : String | Test.java:15:36:15:64 | ... + ... | provenance | Sink:MaD:44055 |
+| Test.java:19:21:19:45 | name : String | Test.java:22:19:22:22 | name : String | provenance |  |
+| Test.java:22:9:22:10 | sb [post update] : StringBuilder | Test.java:23:9:23:10 | sb : StringBuilder | provenance |  |
+| Test.java:22:19:22:22 | name : String | Test.java:22:9:22:10 | sb [post update] : StringBuilder | provenance | Config |
+| Test.java:22:19:22:22 | name : String | Test.java:22:9:22:10 | sb [post update] : StringBuilder | provenance | MaD:44184 |
+| Test.java:23:9:23:10 | sb : StringBuilder | Test.java:23:9:23:10 | sb [post update] : StringBuilder | provenance | Config |
+| Test.java:23:9:23:10 | sb : StringBuilder | Test.java:24:38:24:39 | sb : StringBuilder | provenance |  |
+| Test.java:23:9:23:10 | sb [post update] : StringBuilder | Test.java:24:38:24:39 | sb : StringBuilder | provenance |  |
+| Test.java:24:38:24:39 | sb : StringBuilder | Test.java:24:38:24:50 | toString(...) | provenance | Config Sink:MaD:44058 |
+| Test.java:24:38:24:39 | sb : StringBuilder | Test.java:24:38:24:50 | toString(...) | provenance | MaD:44199 Sink:MaD:44058 |
+| Test.java:28:20:28:44 | name : String | Test.java:30:56:30:59 | name : String | provenance |  |
+| Test.java:30:23:30:60 | format(...) : String | Test.java:31:36:31:39 | html | provenance | Sink:MaD:44065 |
+| Test.java:30:23:30:60 | new ..[] { .. } : Object[] [[]] : String | Test.java:30:23:30:60 | format(...) : String | provenance | MaD:44224 |
+| Test.java:30:56:30:59 | name : String | Test.java:30:23:30:60 | format(...) : String | provenance | Config |
+| Test.java:30:56:30:59 | name : String | Test.java:30:23:30:60 | new ..[] { .. } : Object[] [[]] : String | provenance |  |
+| Test.java:35:24:35:48 | name : String | Test.java:37:55:37:58 | name : String | provenance |  |
+| Test.java:37:55:37:58 | name : String | Test.java:37:36:37:59 | render(...) | provenance | Sink:MaD:44055 |
+| Test.java:37:55:37:58 | name : String | Test.java:60:23:60:33 | name : String | provenance |  |
+| Test.java:60:23:60:33 | name : String | Test.java:61:20:61:52 | ... + ... : String | provenance |  |
+nodes
+| Test.java:13:19:13:43 | name : String | semmle.label | name : String |
+| Test.java:15:36:15:64 | ... + ... | semmle.label | ... + ... |
+| Test.java:19:21:19:45 | name : String | semmle.label | name : String |
+| Test.java:22:9:22:10 | sb [post update] : StringBuilder | semmle.label | sb [post update] : StringBuilder |
+| Test.java:22:19:22:22 | name : String | semmle.label | name : String |
+| Test.java:23:9:23:10 | sb : StringBuilder | semmle.label | sb : StringBuilder |
+| Test.java:23:9:23:10 | sb [post update] : StringBuilder | semmle.label | sb [post update] : StringBuilder |
+| Test.java:24:38:24:39 | sb : StringBuilder | semmle.label | sb : StringBuilder |
+| Test.java:24:38:24:50 | toString(...) | semmle.label | toString(...) |
+| Test.java:28:20:28:44 | name : String | semmle.label | name : String |
+| Test.java:30:23:30:60 | format(...) : String | semmle.label | format(...) : String |
+| Test.java:30:23:30:60 | new ..[] { .. } : Object[] [[]] : String | semmle.label | new ..[] { .. } : Object[] [[]] : String |
+| Test.java:30:56:30:59 | name : String | semmle.label | name : String |
+| Test.java:31:36:31:39 | html | semmle.label | html |
+| Test.java:35:24:35:48 | name : String | semmle.label | name : String |
+| Test.java:37:36:37:59 | render(...) | semmle.label | render(...) |
+| Test.java:37:55:37:58 | name : String | semmle.label | name : String |
+| Test.java:60:23:60:33 | name : String | semmle.label | name : String |
+| Test.java:61:20:61:52 | ... + ... : String | semmle.label | ... + ... : String |
+subpaths
+| Test.java:37:55:37:58 | name : String | Test.java:60:23:60:33 | name : String | Test.java:61:20:61:52 | ... + ... : String | Test.java:37:36:37:59 | render(...) |
+#select
+| Test.java:15:36:15:64 | ... + ... | Test.java:13:19:13:43 | name : String | Test.java:15:36:15:64 | ... + ... | Spring MVC input reaches an HTML response sink without contextual output encoding. |
+| Test.java:24:38:24:50 | toString(...) | Test.java:19:21:19:45 | name : String | Test.java:24:38:24:50 | toString(...) | Spring MVC input reaches an HTML response sink without contextual output encoding. |
+| Test.java:31:36:31:39 | html | Test.java:28:20:28:44 | name : String | Test.java:31:36:31:39 | html | Spring MVC input reaches an HTML response sink without contextual output encoding. |
+| Test.java:37:36:37:59 | render(...) | Test.java:35:24:35:48 | name : String | Test.java:37:36:37:59 | render(...) | Spring MVC input reaches an HTML response sink without contextual output encoding. |
