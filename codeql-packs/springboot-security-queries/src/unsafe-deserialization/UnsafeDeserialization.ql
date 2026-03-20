@@ -13,13 +13,14 @@
 import java
 import semmle.code.java.security.UnsafeDeserializationQuery
 import UnsafeDeserializationLib
+import WebRequestSources
 
 import UnsafeDeserializationFlow::PathGraph
 
 from UnsafeDeserializationFlow::PathNode source, UnsafeDeserializationFlow::PathNode sink
 where
   UnsafeDeserializationFlow::flowPath(source, sink) and
-  isOfficialSpringMvcSourceNode(source.getNode())
+  isAnyWebInputSourceNode(source.getNode())
 select
   sink.getNode().(UnsafeDeserializationSink).getMethodCall(),
   source,

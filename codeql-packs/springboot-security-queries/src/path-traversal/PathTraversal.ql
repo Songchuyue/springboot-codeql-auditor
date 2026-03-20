@@ -18,12 +18,12 @@ import java
 import semmle.code.java.dataflow.DataFlow
 import semmle.code.java.dataflow.TaintTracking
 import semmle.code.java.security.TaintedPathQuery
-
 import PathTraversalLib
+import WebRequestSources
 
 module SpringPathTraversalConfig implements DataFlow::ConfigSig {
   predicate isSource(DataFlow::Node src) {
-    isOfficialSpringMvcSourceNode(src)
+    isAnyWebInputSourceNode(src)
   }
 
   predicate isSink(DataFlow::Node sink) {

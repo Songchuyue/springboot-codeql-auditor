@@ -16,10 +16,11 @@ import semmle.code.java.dataflow.TaintTracking
 import semmle.code.java.security.Sanitizers
 import semmle.code.java.security.XSS
 import XssLib
+import WebRequestSources
 
 module SpringXssConfig implements DataFlow::ConfigSig {
   predicate isSource(DataFlow::Node src) {
-    isOfficialSpringMvcSourceNode(src)
+    isAnyWebInputSourceNode(src)
   }
 
   predicate isSink(DataFlow::Node sink) {

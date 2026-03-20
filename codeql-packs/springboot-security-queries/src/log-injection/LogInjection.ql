@@ -16,10 +16,11 @@ import semmle.code.java.dataflow.DataFlow
 import semmle.code.java.dataflow.TaintTracking
 import semmle.code.java.security.LogInjection
 import LogInjectionLib
+import WebRequestSources
 
 module SpringLogInjectionConfig implements DataFlow::ConfigSig {
   predicate isSource(DataFlow::Node src) {
-    isOfficialSpringMvcSourceNode(src)
+    isAnyWebInputSourceNode(src)
   }
 
   predicate isSink(DataFlow::Node sink) {
