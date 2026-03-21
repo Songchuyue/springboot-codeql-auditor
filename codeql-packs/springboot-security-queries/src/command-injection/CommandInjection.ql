@@ -46,5 +46,5 @@ import SpringCommandInjectionFlow::PathGraph
 
 from SpringCommandInjectionFlow::PathNode source, SpringCommandInjectionFlow::PathNode sink
 where SpringCommandInjectionFlow::flowPath(source, sink)
-select sink.getNode(), source, sink,
+select sink.getNode().asExpr(), source, sink,
   "Spring MVC input reaches OS command execution."

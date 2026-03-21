@@ -45,5 +45,5 @@ import SpringSqlInjectionFlow::PathGraph
 from SpringSqlInjectionFlow::PathNode source, SpringSqlInjectionFlow::PathNode sink
 where
   SpringSqlInjectionFlow::flowPath(source, sink)
-select sink.getNode(), source, sink,
+select sink.getNode().asExpr(), source, sink,
   "Spring MVC input reaches dynamic SQL/JPQL query text."

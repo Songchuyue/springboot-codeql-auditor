@@ -45,5 +45,5 @@ import SpringXssFlow::PathGraph
 
 from SpringXssFlow::PathNode source, SpringXssFlow::PathNode sink
 where SpringXssFlow::flowPath(source, sink)
-select sink.getNode(), source, sink,
+select sink.getNode().asExpr(), source, sink,
   "Spring MVC input reaches an HTML response sink without contextual output encoding."

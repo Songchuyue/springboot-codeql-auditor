@@ -47,5 +47,5 @@ import SpringPathTraversalFlow::PathGraph
 
 from SpringPathTraversalFlow::PathNode source, SpringPathTraversalFlow::PathNode sink
 where SpringPathTraversalFlow::flowPath(source, sink)
-select sink.getNode(), source, sink,
+select sink.getNode().asExpr(), source, sink,
   "Spring MVC input reaches a file-system access path."

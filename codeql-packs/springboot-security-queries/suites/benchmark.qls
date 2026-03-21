@@ -1,0 +1,5 @@
+- description: OWASP Benchmark Java v1.2 focused suite
+- query: src/sql-injection/SqlInjection.ql
+- query: src/command-injection/CommandInjection.ql
+- query: src/path-traversal/PathTraversal.ql
+- query: src/xss/Xss.ql
