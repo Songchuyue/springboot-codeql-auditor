@@ -15,7 +15,7 @@ import semmle.code.java.dataflow.DataFlow
 import semmle.code.java.dataflow.TaintTracking
 import semmle.code.java.security.RequestForgery
 import SsrfLib
-import WebRequestSources
+import common.WebRequestSources
 
 module SpringSsrfConfig implements DataFlow::ConfigSig {
   predicate isSource(DataFlow::Node src) {

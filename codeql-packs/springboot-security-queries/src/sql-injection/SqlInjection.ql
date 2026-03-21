@@ -17,7 +17,7 @@ import semmle.code.java.dataflow.TaintTracking
 import semmle.code.java.security.QueryInjection
 import semmle.code.java.security.Sanitizers
 import SqlInjectionLib
-import WebRequestSources
+import common.WebRequestSources
 
 module SpringSqlInjectionConfig implements DataFlow::ConfigSig {
   predicate isSource(DataFlow::Node src) {

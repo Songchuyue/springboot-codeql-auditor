@@ -13,7 +13,7 @@
 import java
 import semmle.code.java.security.UnsafeDeserializationQuery
 import UnsafeDeserializationLib
-import WebRequestSources
+import common.WebRequestSources
 
 import UnsafeDeserializationFlow::PathGraph
 

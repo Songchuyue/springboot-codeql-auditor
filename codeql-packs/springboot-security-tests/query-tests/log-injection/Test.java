@@ -1,5 +1,10 @@
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,6 +15,7 @@ class Test {
 
     private final AuditLogger auditLogger = new AuditLogger();
     private final LogService logService = new LogService();
+    private final UserService userService = new UserService();
 
     // =========================================================
     // 1. Official baseline should catch
@@ -124,6 +130,60 @@ class Test {
         static boolean isSafeForLog(String s) {
             // project-specific guard wrapper, modeled in QL
             return true;
+        }
+    }
+
+    // =========================================================
+    // 1. BAD: JoinPoint.getArgs() 被 advice 直接写日志
+    // =========================================================
+    @GetMapping("/badAopJoinPoint")
+    void badAopJoinPoint(@RequestParam String user) {
+        userService.save(user);
+    }
+
+    // =========================================================
+    // 2. BAD: advice 绑定参数后写项目 logger wrapper
+    // =========================================================
+    @GetMapping("/badAopBound")
+    void badAopBound(@RequestParam String user) {
+        userService.audit(user);
+    }
+
+    // =========================================================
+    // 3. GOOD: advice 中先 sanitizer 再写日志
+    // =========================================================
+    @GetMapping("/goodAopBoundSanitized")
+    void goodAopBoundSanitized(@RequestParam String user) {
+        userService.safeAudit(user);
+    }
+
+    @Service
+    static class UserService {
+        void save(String user) { }
+        void audit(String user) { }
+        void safeAudit(String user) { }
+    }
+
+    @Aspect
+    @Component
+    static class LoggingAspect {
+        private static final Logger logger = LoggerFactory.getLogger(LoggingAspect.class);
+        private static final AuditLogger auditLogger = new AuditLogger();
+
+        @Before("execution(* TestAopLog.UserService.save(..))")
+        public void beforeJoinPoint(JoinPoint jp) {
+            logger.info("args={}", jp.getArgs());
+        }
+
+        @Before("execution(* TestAopLog.UserService.audit(..)) && args(user)")
+        public void beforeBound(String user) {
+            auditLogger.info("audit user=" + user);
+        }
+
+        @Before("execution(* TestAopLog.UserService.safeAudit(..)) && args(user)")
+        public void beforeBoundSafe(String user) {
+            String cleaned = user.replace('\n', '_').replace('\r', '_');
+            logger.info("safe user={}", cleaned);
         }
     }
 }
