@@ -55,6 +55,7 @@ predicate isAdviceMethod(Method m) {
   )
 }
 
+// 方法所在类带有@Aspect, 方法本身带有@Before, @After, @Around等
 class SpringAdviceMethod extends Method {
   SpringAdviceMethod() { isAdviceMethod(this) }
 }
