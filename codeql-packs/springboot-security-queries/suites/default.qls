@@ -1,6 +1,6 @@
 - description: Stable seven security queries for current stage
-
 - query: src/sql-injection/SqlInjection.ql
+- query: src/sql-injection/MyBatisXmlDollarPlaceholderSqlInjection.ql
 - query: src/ssrf/Ssrf.ql
 - query: src/command-injection/CommandInjection.ql
 - query: src/path-traversal/PathTraversal.ql
