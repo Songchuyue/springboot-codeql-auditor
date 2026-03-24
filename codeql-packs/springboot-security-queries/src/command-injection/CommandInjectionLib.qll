@@ -171,21 +171,4 @@ predicate isProjectCommandInjectionFlowStep(DataFlow::Node pred, DataFlow::Node 
   )
 }
 
-private predicate commandAllowlistGuard(Guard g, Expr e, boolean branch) {
-  exists(MethodCall mc, CompileTimeConstantExpr c |
-    mc.getMethod().hasQualifiedName("java.lang", "String", "equals") and
-    g = mc and
-    branch = true and
-    (
-      c = mc.getQualifier() and
-      e = mc.getArgument(0)
-      or
-      c = mc.getArgument(0) and
-      e = mc.getQualifier()
-    )
-  )
-}
-
-predicate isProjectCommandInjectionSanitizer(DataFlow::Node node) {
-  node = DataFlow::BarrierGuard<commandAllowlistGuard/3>::getABarrierNode()
-}
+predicate isProjectCommandInjectionSanitizer(DataFlow::Node node) { none() }

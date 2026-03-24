@@ -108,34 +108,7 @@ predicate isProjectLogInjectionSink(DataFlow::Node sink) {
   sink instanceof ProjectLoggerSink
 }
 
-private predicate logSafeGuard(Guard g, Expr e, boolean branch) {
-  exists(MethodCall mc |
-    mc.getMethod().getNumberOfParameters() = 1 and
-    (
-      mc.getMethod().hasName("isSafeForLog") or
-      mc.getMethod().hasName("hasNoLineBreaks") or
-      mc.getMethod().hasName("containsNoLineBreaks")
-    ) and
-    g = mc and
-    e = mc.getArgument(0) and
-    branch = true
-  )
-}
-
-predicate isProjectLogInjectionSanitizer(DataFlow::Node node) {
-  exists(MethodCall mc |
-    mc.getMethod().getNumberOfParameters() = 1 and
-    (
-      mc.getMethod().hasName("sanitizeForLog") or
-      mc.getMethod().hasName("stripCrLf") or
-      mc.getMethod().hasName("removeLineBreaks") or
-      mc.getMethod().hasName("normalizeForLog")
-    ) and
-    node = DataFlow::exprNode(mc)
-  )
-  or
-  node = DataFlow::BarrierGuard<logSafeGuard/3>::getABarrierNode()
-}
+predicate isProjectLogInjectionSanitizer(DataFlow::Node node) { none() }
 
 private predicate isBuilderType(RefType t) {
   t.hasQualifiedName("java.lang", "StringBuilder") or

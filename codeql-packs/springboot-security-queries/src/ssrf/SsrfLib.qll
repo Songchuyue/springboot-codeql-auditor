@@ -93,51 +93,40 @@ private class RestClientDirectTargetSink extends RequestForgerySink {
   }
 }
 
-
-// 匹配uri(..., uriVariables...)这类方法
-private class RestClientUriMethodWithUriVariablesParameter extends Method {
-  int pos;
-  RestClientUriMethodWithUriVariablesParameter() {
-    isRestClientUriMethod(this) and// 先找uri方法
-    this.getParameter(pos).getName() = "uriVariables"// 再确定uriVariables位置, 注意, 位置下标从0开始
-  }
-
-  int getUriVariablesPosition() { result = pos }// pos记录了uriVariables位置
-}
-
-// 取出URI模板, 如restClient.get().uri("http://{host}/internal", host), 则取出"http://{host}/internal"
-pragma[inline]// 内联展开
-private CompileTimeConstantExpr getConstantUrl(MethodCall mc) {// 使用CompileTimeConstantExpr确定返回值类型
+pragma[inline]
+private CompileTimeConstantExpr getRestClientConstantUrl(MethodCall mc) {
+  isRestClientUriMethod(mc.getMethod()) and
+  mc.getNumArgument() >= 2 and
   result = mc.getArgument(0)
 }
 
-// 找placeholder, 其中idx表示placeholder的次序, offset表示某placeholder对应的偏移量
 pragma[inline]
-private predicate urlHasPlaceholderAtOffset(MethodCall mc, int idx, int offset) {
+private predicate restClientUrlHasPlaceholderAtOffset(MethodCall mc, int idx, int offset) {
   exists(string url, string placeholder |
-    url = getConstantUrl(mc).getStringValue() and
-    placeholder = url.regexpFind("\\{[^}]+\\}", idx, offset)// "\\{" = 匹配'{', "[^}]+" = 匹配若干个非'}'字符, "\\}" = 匹配'}'
+    url = getRestClientConstantUrl(mc).getStringValue() and
+    placeholder = url.regexpFind("\\{[^}]+\\}", idx, offset)
   )
 }
 
 private class RestClientUriVariableSink extends RequestForgerySink {
   RestClientUriVariableSink() {
-    exists(RestClientUriMethodWithUriVariablesParameter m, MethodCall mc, int i |
-      mc.getMethod() = m and// mc匹配带uriVariables参数的uri方法
-      i >= 0 and
-      this.asExpr() = mc.getArgument(m.getUriVariablesPosition() + i) and// 匹配uri(..., uriVariables...)的若干uriVariables参数
+    exists(MethodCall mc, int i |
+      isRestClientUriMethod(mc.getMethod()) and
+      mc.getNumArgument() >= 2 and
+      i >= 0 and i < mc.getNumArgument() - 1 and
+      this.asExpr() = mc.getArgument(i + 1) and
       (
         exists(int offset |
-          urlHasPlaceholderAtOffset(mc, i, offset) and
-          offset < getConstantUrl(mc).(HostnameSanitizingPrefix).getOffset()
+          restClientUrlHasPlaceholderAtOffset(mc, i, offset) and
+          offset < getRestClientConstantUrl(mc).(HostnameSanitizingPrefix).getOffset()
         )
         or
         (
-          not getConstantUrl(mc) instanceof HostnameSanitizingPrefix and
-          urlHasPlaceholderAtOffset(mc, i, _)
+          not getRestClientConstantUrl(mc) instanceof HostnameSanitizingPrefix and
+          restClientUrlHasPlaceholderAtOffset(mc, i, _)
         )
         or
-        not exists(getConstantUrl(mc).getStringValue())
+        not exists(getRestClientConstantUrl(mc).getStringValue())
       )
     )
   }
@@ -208,16 +197,6 @@ private class RequestEntityDirectTargetSink extends RequestForgerySink {
   }
 }
 
-// 匹配 RequestEntity.get("http://{host}/internal", host) 这类带 uriVariables 的 builder
-private class RequestEntityBuilderMethodWithUriVariablesParameter extends Method {
-  int pos;
-  RequestEntityBuilderMethodWithUriVariablesParameter() {
-    isRequestEntityStaticBuilder(this) and
-    this.getParameter(pos).getName() = "uriVariables"
-  }
-  int getUriVariablesPosition() { result = pos }
-}
-
 pragma[inline]
 private CompileTimeConstantExpr getRequestEntityConstantUrl(MethodCall mc) {
   exists(int i |
@@ -227,19 +206,25 @@ private CompileTimeConstantExpr getRequestEntityConstantUrl(MethodCall mc) {
 }
 
 pragma[inline]
+private predicate isRequestEntityStringTemplateCall(MethodCall mc, int urlPos) {
+  isRequestEntityStringTargetParameter(mc.getMethod(), urlPos) and
+  mc.getNumArgument() >= urlPos + 2
+}
+
+pragma[inline]
 private predicate requestEntityUrlHasPlaceholderAtOffset(MethodCall mc, int idx, int offset) {
   exists(string url, string placeholder |
-    url = getConstantUrl(mc).getStringValue() and
-    placeholder = url.regexpFind("\\{[^}]+\\}", idx, offset)// "\\{" = 匹配'{', "[^}]+" = 匹配若干个非'}'字符, "\\}" = 匹配'}'
+    url = getRequestEntityConstantUrl(mc).getStringValue() and
+    placeholder = url.regexpFind("\\{[^}]+\\}", idx, offset)
   )
 }
 
 private class RequestEntityUriVariableSink extends RequestForgerySink {
   RequestEntityUriVariableSink() {
-    exists(RequestEntityBuilderMethodWithUriVariablesParameter m, MethodCall mc, int i |
-      mc.getMethod() = m and
-      i >= 0 and
-      this.asExpr() = mc.getArgument(m.getUriVariablesPosition() + i) and
+    exists(MethodCall mc, int urlPos, int i |
+      isRequestEntityStringTemplateCall(mc, urlPos) and
+      i >= 0 and i < mc.getNumArgument() - urlPos - 1 and
+      this.asExpr() = mc.getArgument(urlPos + 1 + i) and
       (
         exists(int offset |
           requestEntityUrlHasPlaceholderAtOffset(mc, i, offset) and
@@ -264,20 +249,8 @@ predicate isProjectSsrfSink(DataFlow::Node sink) {
   sink instanceof RequestEntityUriVariableSink
 }
 
-
-predicate assertAllowedGuard(Guard g, Expr e, boolean branch) {
-  exists(MethodCall mc |
-    mc.getMethod().hasQualifiedName("java.lang", "String", "equals") and
-    g = mc and
-    e = mc.getArgument(0) and
-    branch = true
-  )
-}
-
 /** Extension point for project-specific SSRF sanitizers. */
-predicate isProjectSsrfSanitizer(DataFlow::Node node) { 
-  node = DataFlow::BarrierGuard<assertAllowedGuard/3>::getABarrierNode()
- }
+predicate isProjectSsrfSanitizer(DataFlow::Node node) { none() }
 
 
 /** Extension point for project-specific SSRF extra taint steps. */
