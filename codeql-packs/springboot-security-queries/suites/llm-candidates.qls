@@ -1,0 +1,9 @@
+- description: High-recall candidate queries for LLM triage.
+- query: src/sql-injection/SqlInjection.ql
+- query: src/sql-injection/MyBatisXmlDollarPlaceholderSqlInjection.ql
+- query: src/ssrf/Ssrf.ql
+- query: src/command-injection/CommandInjection.ql
+- query: src/path-traversal/PathTraversalLlmCandidate.ql
+- query: src/xss/XssLlmCandidate.ql
+- query: src/log-injection/LogInjection.ql
+- query: src/unsafe-deserialization/UnsafeDeserialization.ql
