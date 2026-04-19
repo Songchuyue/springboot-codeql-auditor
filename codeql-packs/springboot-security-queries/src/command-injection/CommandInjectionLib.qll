@@ -3,6 +3,7 @@ import semmle.code.java.controlflow.Guards
 import semmle.code.java.dataflow.DataFlow
 import semmle.code.java.frameworks.spring.SpringController
 import semmle.code.java.security.CommandLineQuery
+import common.CommonTaintSteps
 
 predicate isOfficialSpringMvcSourceNode(DataFlow::Node src) {
   exists(SpringRequestMappingParameter p |
@@ -64,16 +65,11 @@ private predicate isProcessBuilderListCall(Call call) {
   )
 }
 
-private predicate isListFactoryCall(MethodCall mc) {
-  mc.getMethod().hasQualifiedName("java.util", "Arrays", "asList") or
-  mc.getMethod().hasQualifiedName("java.util", "List", "of")
-}
-
 // expr为List.of("sh", "-c", cmd)或者Arrays.asList("cmd", "-c", cmd)多种组合
 private predicate isShellLauncherListExpr(Expr expr) {
   exists(MethodCall mc |
     expr = mc and
-    isListFactoryCall(mc) and
+    isCommonListFactoryExpr(mc) and
     isShellLauncher(mc.getArgument(0), mc.getArgument(1))
   )
 }
@@ -98,77 +94,10 @@ predicate isProjectCommandInjectionSink(DataFlow::Node sink) {
   sink instanceof ShellLauncherListSink
 }
 
-private predicate isBuilderType(RefType t) {
-  t.hasQualifiedName("java.lang", "StringBuilder") or
-  t.hasQualifiedName("java.lang", "StringBuffer")
-}
-
-private predicate isBuilderAppendMethod(Method m) {
-  m.hasName("append") and
-  exists(RefType t |
-    t = m.getDeclaringType() and
-    isBuilderType(t)
-  )
-}
-
-private predicate isBuilderToStringMethod(Method m) {
-  m.hasName("toString") and
-  exists(RefType t |
-    t = m.getDeclaringType() and
-    isBuilderType(t)
-  )
-}
-
-private predicate isStringFormatMethod(Method m) {
-  m.hasQualifiedName("java.lang", "String", "format")
-}
-
 predicate isProjectCommandInjectionFlowStep(DataFlow::Node pred, DataFlow::Node succ) {
-  // tainted arg -> mutated StringBuilder/StringBuffer
-  exists(MethodCall mc, DataFlow::PostUpdateNode post |
-    isBuilderAppendMethod(mc.getMethod()) and
-    pred = DataFlow::exprNode(mc.getArgument(0)) and
-    post.getPreUpdateNode() = DataFlow::exprNode(mc.getQualifier()) and
-    succ = post
-  )
+  isCommonStringAssemblyStep(pred, succ)
   or
-  // already-tainted builder remains tainted after append
-  exists(MethodCall mc, DataFlow::PostUpdateNode post |
-    isBuilderAppendMethod(mc.getMethod()) and
-    pred = post.getPreUpdateNode() and
-    post.getPreUpdateNode() = DataFlow::exprNode(mc.getQualifier()) and
-    succ = post
-  )
-  or
-  // builder.toString()
-  exists(MethodCall mc |
-    isBuilderToStringMethod(mc.getMethod()) and
-    pred = DataFlow::exprNode(mc.getQualifier()) and
-    succ = DataFlow::exprNode(mc)
-  )
-  or
-  // String.format(...)
-  exists(MethodCall mc, int i |
-    isStringFormatMethod(mc.getMethod()) and
-    succ = DataFlow::exprNode(mc) and
-    (
-      mc.getMethod().getNumberOfParameters() = 2 and
-      i >= 1 and
-      pred = DataFlow::exprNode(mc.getArgument(i))
-      or
-      mc.getMethod().getNumberOfParameters() = 3 and
-      i >= 2 and
-      pred = DataFlow::exprNode(mc.getArgument(i))
-    )
-  )
-  or
-  // List.of(...) / Arrays.asList(...)
-  exists(MethodCall mc, int i |
-    isListFactoryCall(mc) and
-    i >= 0 and
-    pred = DataFlow::exprNode(mc.getArgument(i)) and
-    succ = DataFlow::exprNode(mc)
-  )
+  isCommonListFactoryFlowStep(pred, succ)
 }
 
 predicate isProjectCommandInjectionSanitizer(DataFlow::Node node) { none() }

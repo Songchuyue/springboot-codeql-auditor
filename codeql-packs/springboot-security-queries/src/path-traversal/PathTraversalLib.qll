@@ -1,6 +1,8 @@
 import semmle.code.java.dataflow.DataFlow
 import semmle.code.java.frameworks.spring.SpringController
 import semmle.code.java.security.PathSanitizer
+import common.CommonTaintSteps
+import common.FileSystemSinks
 
 predicate isOfficialSpringMvcSourceNode(DataFlow::Node src) {
   exists(SpringRequestMappingParameter p |
@@ -10,7 +12,9 @@ predicate isOfficialSpringMvcSourceNode(DataFlow::Node src) {
 }
 
 /** Extension point for project-specific path traversal sinks. */
-predicate isProjectPathTraversalSink(DataFlow::Node sink) { none() }
+predicate isProjectPathTraversalSink(DataFlow::Node sink) {
+  isFileReadOrWriteDestinationSink(sink)
+}
 
 /**
  * Default-layer sanitizer:
@@ -21,4 +25,6 @@ predicate isProjectPathTraversalSanitizer(DataFlow::Node node) {
 }
 
 /** Extension point for project-specific extra taint steps. */
-predicate isProjectPathTraversalFlowStep(DataFlow::Node pred, DataFlow::Node succ) { none() }
+predicate isProjectPathTraversalFlowStep(DataFlow::Node pred, DataFlow::Node succ) {
+  isCommonStringAssemblyStep(pred, succ)
+}
