@@ -11,6 +11,7 @@
  * external/cwe/cwe-073
  * external/cwe/cwe-434
  */
+
 import java
 import semmle.code.java.dataflow.DataFlow
 import semmle.code.java.dataflow.TaintTracking
@@ -25,14 +26,21 @@ module SpringUnsafeFileUploadConfig implements DataFlow::ConfigSig {
     isUnsafeUploadSinkNode(sink)
   }
 
+  predicate isBarrier(DataFlow::Node node) {
+    isUnsafeUploadSanitizerNode(node) or
+    isUnsafeUploadGuardBarrierNode(node)
+  }
+
+  predicate isBarrierIn(DataFlow::Node node) {
+    isSource(node)
+  }
+
   predicate isAdditionalFlowStep(DataFlow::Node pred, DataFlow::Node succ) {
     isUnsafeUploadAdditionalFlowStep(pred, succ)
   }
 }
 
-module SpringUnsafeFileUploadFlow =
-  TaintTracking::Global<SpringUnsafeFileUploadConfig>;
-
+module SpringUnsafeFileUploadFlow = TaintTracking::Global<SpringUnsafeFileUploadConfig>;
 import SpringUnsafeFileUploadFlow::PathGraph
 
 from SpringUnsafeFileUploadFlow::PathNode source, SpringUnsafeFileUploadFlow::PathNode sink

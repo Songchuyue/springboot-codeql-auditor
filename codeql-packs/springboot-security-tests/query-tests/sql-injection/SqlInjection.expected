@@ -2,12 +2,18 @@ edges
 | Test.java:31:24:31:51 | keyword : String | Test.java:33:28:33:30 | sql | provenance | Sink:MaD:50984 |
 | Test.java:37:25:37:52 | keyword : String | Test.java:39:28:39:30 | sql | provenance | Sink:MaD:50984 |
 | Test.java:43:31:43:58 | keyword : String | Test.java:45:19:45:25 | keyword : String | provenance |  |
-| Test.java:45:9:45:10 | sb [post update] : StringBuilder | Test.java:47:28:47:29 | sb : StringBuilder | provenance |  |
+| Test.java:45:9:45:10 | sb [post update] : StringBuilder | Test.java:46:9:46:10 | sb : StringBuilder | provenance |  |
+| Test.java:45:19:45:25 | keyword : String | Test.java:45:9:45:10 | sb [post update] : StringBuilder | provenance | Config |
 | Test.java:45:19:45:25 | keyword : String | Test.java:45:9:45:10 | sb [post update] : StringBuilder | provenance | MaD:44184 |
+| Test.java:46:9:46:10 | sb : StringBuilder | Test.java:46:9:46:10 | sb [post update] : StringBuilder | provenance | Config |
+| Test.java:46:9:46:10 | sb : StringBuilder | Test.java:47:28:47:29 | sb : StringBuilder | provenance |  |
+| Test.java:46:9:46:10 | sb [post update] : StringBuilder | Test.java:47:28:47:29 | sb : StringBuilder | provenance |  |
+| Test.java:47:28:47:29 | sb : StringBuilder | Test.java:47:28:47:40 | toString(...) | provenance | Config Sink:MaD:50984 |
 | Test.java:47:28:47:29 | sb : StringBuilder | Test.java:47:28:47:40 | toString(...) | provenance | MaD:44199 Sink:MaD:50984 |
 | Test.java:51:24:51:51 | keyword : String | Test.java:52:77:52:83 | keyword : String | provenance |  |
 | Test.java:52:22:52:84 | format(...) : String | Test.java:53:28:53:30 | sql | provenance | Sink:MaD:50984 |
 | Test.java:52:22:52:84 | new ..[] { .. } : Object[] [[]] : String | Test.java:52:22:52:84 | format(...) : String | provenance | MaD:44224 |
+| Test.java:52:77:52:83 | keyword : String | Test.java:52:22:52:84 | format(...) : String | provenance | Config |
 | Test.java:52:77:52:83 | keyword : String | Test.java:52:22:52:84 | new ..[] { .. } : Object[] [[]] : String | provenance |  |
 | Test.java:57:33:57:60 | keyword : String | Test.java:58:39:58:45 | keyword : String | provenance |  |
 | Test.java:58:22:58:46 | buildUnsafeWhere(...) : String | Test.java:59:28:59:30 | sql | provenance | Sink:MaD:50984 |
@@ -51,6 +57,8 @@ nodes
 | Test.java:43:31:43:58 | keyword : String | semmle.label | keyword : String |
 | Test.java:45:9:45:10 | sb [post update] : StringBuilder | semmle.label | sb [post update] : StringBuilder |
 | Test.java:45:19:45:25 | keyword : String | semmle.label | keyword : String |
+| Test.java:46:9:46:10 | sb : StringBuilder | semmle.label | sb : StringBuilder |
+| Test.java:46:9:46:10 | sb [post update] : StringBuilder | semmle.label | sb [post update] : StringBuilder |
 | Test.java:47:28:47:29 | sb : StringBuilder | semmle.label | sb : StringBuilder |
 | Test.java:47:28:47:40 | toString(...) | semmle.label | toString(...) |
 | Test.java:51:24:51:51 | keyword : String | semmle.label | keyword : String |

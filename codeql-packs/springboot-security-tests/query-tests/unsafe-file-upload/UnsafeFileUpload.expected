@@ -1,0 +1,32 @@
+edges
+| Test.java:11:18:11:60 | get(...) : Path | Test.java:12:25:12:25 | p | provenance |  |
+| Test.java:11:18:11:60 | new ..[] { .. } : String[] [[]] : String | Test.java:11:18:11:60 | get(...) : Path | provenance | MaD:44576 |
+| Test.java:11:34:11:59 | getOriginalFilename(...) : String | Test.java:11:18:11:60 | new ..[] { .. } : String[] [[]] : String | provenance | Src:MaD:51287  |
+| Test.java:20:31:20:56 | getOriginalFilename(...) : String | Test.java:20:25:20:57 | build(...) | provenance | Src:MaD:51287 MaD:44576 |
+| Test.java:20:31:20:56 | getOriginalFilename(...) : String | Test.java:40:24:40:34 | name : String | provenance | Src:MaD:51287  |
+| Test.java:40:24:40:34 | name : String | Test.java:41:32:41:35 | name | provenance |  |
+| Test.java:40:24:40:34 | name : String | Test.java:41:32:41:35 | name : String | provenance |  |
+| Test.java:41:16:41:36 | new ..[] { .. } : String[] [[]] : String | Test.java:41:16:41:36 | get(...) : Path | provenance | MaD:44576 |
+| Test.java:41:32:41:35 | name : String | Test.java:41:16:41:36 | new ..[] { .. } : String[] [[]] : String | provenance |  |
+nodes
+| Test.java:11:18:11:60 | get(...) : Path | semmle.label | get(...) : Path |
+| Test.java:11:18:11:60 | new ..[] { .. } : String[] [[]] : String | semmle.label | new ..[] { .. } : String[] [[]] : String |
+| Test.java:11:34:11:59 | getOriginalFilename(...) | semmle.label | getOriginalFilename(...) |
+| Test.java:11:34:11:59 | getOriginalFilename(...) : String | semmle.label | getOriginalFilename(...) : String |
+| Test.java:12:25:12:25 | p | semmle.label | p |
+| Test.java:16:24:16:50 | getSubmittedFileName(...) | semmle.label | getSubmittedFileName(...) |
+| Test.java:20:25:20:57 | build(...) | semmle.label | build(...) |
+| Test.java:20:31:20:56 | getOriginalFilename(...) : String | semmle.label | getOriginalFilename(...) : String |
+| Test.java:40:24:40:34 | name : String | semmle.label | name : String |
+| Test.java:41:16:41:36 | get(...) : Path | semmle.label | get(...) : Path |
+| Test.java:41:16:41:36 | new ..[] { .. } : String[] [[]] : String | semmle.label | new ..[] { .. } : String[] [[]] : String |
+| Test.java:41:32:41:35 | name | semmle.label | name |
+| Test.java:41:32:41:35 | name : String | semmle.label | name : String |
+subpaths
+| Test.java:20:31:20:56 | getOriginalFilename(...) : String | Test.java:40:24:40:34 | name : String | Test.java:41:16:41:36 | get(...) : Path | Test.java:20:25:20:57 | build(...) |
+#select
+| Test.java:11:34:11:59 | getOriginalFilename(...) | Test.java:11:34:11:59 | getOriginalFilename(...) | Test.java:11:34:11:59 | getOriginalFilename(...) | User-controlled uploaded filename reaches file-system path construction or write destination. |
+| Test.java:12:25:12:25 | p | Test.java:11:34:11:59 | getOriginalFilename(...) : String | Test.java:12:25:12:25 | p | User-controlled uploaded filename reaches file-system path construction or write destination. |
+| Test.java:16:24:16:50 | getSubmittedFileName(...) | Test.java:16:24:16:50 | getSubmittedFileName(...) | Test.java:16:24:16:50 | getSubmittedFileName(...) | User-controlled uploaded filename reaches file-system path construction or write destination. |
+| Test.java:20:25:20:57 | build(...) | Test.java:20:31:20:56 | getOriginalFilename(...) : String | Test.java:20:25:20:57 | build(...) | User-controlled uploaded filename reaches file-system path construction or write destination. |
+| Test.java:41:32:41:35 | name | Test.java:20:31:20:56 | getOriginalFilename(...) : String | Test.java:41:32:41:35 | name | User-controlled uploaded filename reaches file-system path construction or write destination. |
