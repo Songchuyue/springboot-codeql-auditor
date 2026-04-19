@@ -1,6 +1,7 @@
 import java
 import semmle.code.java.controlflow.Guards
 import semmle.code.java.dataflow.DataFlow
+
 import common.CommonTaintSteps
 import common.FileSystemSinks
 
@@ -8,12 +9,6 @@ private predicate isMultipartFilenameGetter(Method m) {
   m.hasQualifiedName("org.springframework.web.multipart", "MultipartFile", "getOriginalFilename") or
   m.hasQualifiedName("jakarta.servlet.http", "Part", "getSubmittedFileName") or
   m.hasQualifiedName("javax.servlet.http", "Part", "getSubmittedFileName")
-}
-
-private predicate isProjectFilenameSanitizerMethod(Method m) {
-  m.hasName("sanitizeFilename") or
-  m.hasName("normalizeUploadFilename") or
-  m.hasName("extractBasename")
 }
 
 private predicate safeFilenameGuard(Guard g, Expr e, boolean branch) {
@@ -39,10 +34,12 @@ predicate isUnsafeUploadSinkNode(DataFlow::Node sink) {
   isAnyFileSystemSink(sink)
 }
 
+// 通用规则里不要按方法名直接判定 sanitizer
 predicate isUnsafeUploadSanitizerNode(DataFlow::Node node) {
-  exists(MethodCall mc |
-    node = DataFlow::exprNode(mc) and
-    isProjectFilenameSanitizerMethod(mc.getMethod())
+  exists(int i |
+    i = 0 and
+    i = 1 and
+    node = node
   )
 }
 

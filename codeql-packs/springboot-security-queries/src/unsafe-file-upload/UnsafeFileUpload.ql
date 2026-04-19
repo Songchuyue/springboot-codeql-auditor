@@ -27,7 +27,6 @@ module SpringUnsafeFileUploadConfig implements DataFlow::ConfigSig {
   }
 
   predicate isBarrier(DataFlow::Node node) {
-    isUnsafeUploadSanitizerNode(node) or
     isUnsafeUploadGuardBarrierNode(node)
   }
 

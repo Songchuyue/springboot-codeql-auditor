@@ -1,3 +1,4 @@
+import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 class Test {
     private static final Logger logger = LoggerFactory.getLogger(Test.class);
+    private static final AuditLogger audit = new AuditLogger();
 
     private String accessToken;
 
@@ -38,8 +40,13 @@ class Test {
     }
 
     @GetMapping("/badResponse")
-    void badResponse(@RequestParam String token, Response resp) {
+    void badResponse(@RequestParam String token, HttpServletResponse resp) throws Exception {
         resp.getWriter().write(token);
+    }
+
+    @GetMapping("/badProjectLogger")
+    void badProjectLogger(@RequestParam String token) {
+        audit.info("token={}", token);
     }
 
     @GetMapping("/goodConstant")
@@ -58,14 +65,8 @@ class Test {
         }
     }
 
-    static class Response {
-        Writer getWriter() {
-            return null;
-        }
-    }
-
-    static class Writer {
-        void write(String s) {
+    static class AuditLogger {
+        void info(String format, Object arg) {
         }
     }
 }

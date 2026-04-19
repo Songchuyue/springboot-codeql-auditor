@@ -2,6 +2,7 @@ import java
 import semmle.code.java.dataflow.DataFlow
 import semmle.code.java.security.LogInjection
 import semmle.code.java.security.XSS
+
 import common.CommonTaintSteps
 import common.SensitiveDataSources
 import common.ProjectLogging
@@ -14,20 +15,19 @@ predicate isSensitiveExposureAdditionalFlowStep(DataFlow::Node pred, DataFlow::N
   isCommonStringAssemblyStep(pred, succ)
 }
 
-private predicate isResponseLikeGetWriter(MethodCall getWriter) {
+private predicate isHttpServletResponseGetWriter(MethodCall getWriter) {
   getWriter.getMethod().hasName("getWriter") and
   exists(RefType t |
     t = getWriter.getMethod().getDeclaringType() and
     (
       t.hasQualifiedName("jakarta.servlet.http", "HttpServletResponse") or
-      t.hasQualifiedName("javax.servlet.http", "HttpServletResponse") or
-      t.getName().matches("%Response%")
+      t.hasQualifiedName("javax.servlet.http", "HttpServletResponse")
     )
   )
 }
 
-class ResponseLikeWriteSink extends DataFlow::ExprNode {
-  ResponseLikeWriteSink() {
+class HttpServletResponseWriteSink extends DataFlow::ExprNode {
+  HttpServletResponseWriteSink() {
     exists(MethodCall out, MethodCall getWriter |
       (
         out.getMethod().hasName("write") or
@@ -35,7 +35,7 @@ class ResponseLikeWriteSink extends DataFlow::ExprNode {
         out.getMethod().hasName("println")
       ) and
       getWriter = out.getQualifier() and
-      isResponseLikeGetWriter(getWriter) and
+      isHttpServletResponseGetWriter(getWriter) and
       this.asExpr() = out.getArgument(0)
     )
   }
@@ -45,5 +45,5 @@ predicate isSensitiveExposureSinkNode(DataFlow::Node sink) {
   sink instanceof LogInjectionSink or
   isProjectLogInjectionSink(sink) or
   sink instanceof XssSink or
-  sink instanceof ResponseLikeWriteSink
+  sink instanceof HttpServletResponseWriteSink
 }
