@@ -24,7 +24,7 @@ public class Test {
         file.transferTo(Paths.get(BASE, "fixed.txt"));
     }
 
-    void goodSanitized(MultipartFile file) throws Exception {
+    void badSanitizeByNameOnly(MultipartFile file) throws Exception {
         String safe = sanitizeFilename(file.getOriginalFilename());
         file.transferTo(Paths.get(BASE, safe));
     }
@@ -54,5 +54,9 @@ public class Test {
             && !name.contains("..")
             && !name.contains("/")
             && !name.contains("\\");
+    }
+
+    void badJavaxPart(javax.servlet.http.Part part) throws Exception {
+        new File(BASE, part.getSubmittedFileName());
     }
 }

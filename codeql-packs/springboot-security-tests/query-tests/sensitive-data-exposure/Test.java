@@ -1,52 +1,60 @@
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
 class Test {
-    private final AuditLogger auditLogger = new AuditLogger();
+    private static final Logger logger = LoggerFactory.getLogger(Test.class);
+
     private String accessToken;
 
-    void badParam(String password) {
-        auditLogger.info(password);
+    @GetMapping("/badParam")
+    void badParam(@RequestParam String password) {
+        logger.info(password);
     }
 
+    @GetMapping("/badField")
     void badField() {
-        auditLogger.warn(accessToken);
+        logger.warn(accessToken);
     }
 
+    @GetMapping("/badGetter")
     void badGetter(Credential c) {
-        auditLogger.info("pwd=" + c.getPassword());
+        logger.info("pwd=" + c.getPassword());
     }
 
+    @GetMapping("/badBuilder")
     void badBuilder(Credential c) {
         StringBuilder sb = new StringBuilder("pwd=");
         sb.append(c.getPassword());
-        auditLogger.info(sb.toString());
+        logger.info(sb.toString());
     }
 
+    @GetMapping("/badFormat")
     void badFormat(Credential c) {
-        auditLogger.info(String.format("pwd=%s", c.getPassword()));
+        logger.info(String.format("pwd=%s", c.getPassword()));
     }
 
-    void badResponse(String token, Response resp) {
+    @GetMapping("/badResponse")
+    void badResponse(@RequestParam String token, Response resp) {
         resp.getWriter().write(token);
     }
 
+    @GetMapping("/goodConstant")
     void goodConstant() {
-        auditLogger.info("ok");
+        logger.info("ok");
     }
 
-    void goodNonSensitive(String userName) {
-        auditLogger.info(userName);
+    @GetMapping("/goodNonSensitive")
+    void goodNonSensitive(@RequestParam String userName) {
+        logger.info(userName);
     }
 
     static class Credential {
         String getPassword() {
             return null;
-        }
-    }
-
-    static class AuditLogger {
-        void info(String msg) {
-        }
-
-        void warn(String msg) {
         }
     }
 

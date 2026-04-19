@@ -4,8 +4,10 @@ import semmle.code.java.security.LogInjection
 
 private predicate isProjectLoggerLikeType(RefType t) {
   not t.hasQualifiedName("org.slf4j", "Logger") and
+  not t.hasQualifiedName("java.util.logging", "Logger") and
   (
-    t.getName().matches("%Logger%") or
+    t.getName().matches("%AuditLogger%") or
+    t.getName().matches("%AppLogger%") or
     t.getName().matches("%LogUtil%") or
     t.getName().matches("%LoggingService%")
   )
@@ -30,7 +32,7 @@ class ProjectLoggerSink extends LogInjectionSink {
   ProjectLoggerSink() {
     exists(MethodCall mc, Expr arg |
       isProjectLoggingMethod(mc.getMethod()) and
-      arg = mc.getAnArgument() and
+      arg = mc.getArgument(0) and
       this.asExpr() = arg
     )
   }
