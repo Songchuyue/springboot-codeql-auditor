@@ -36,27 +36,9 @@ private predicate safeRelativePathGuard(Guard g, Expr e, boolean branch) {
 /** Extension point for project-specific path traversal sinks. */
 predicate isProjectPathTraversalSink(DataFlow::Node sink) { none() }
 
-/**
- * Extension point for built-in and project-specific sanitizers.
- *
- * 1) Reuse official path-injection sanitizers.
- * 2) Recognize a few project-friendly return-value sanitizers by name.
- * 3) Recognize guard-style validators.
- */
+/** Extension point for built-in and project-specific sanitizers. */
 predicate isProjectPathTraversalSanitizer(DataFlow::Node node) {
   node instanceof PathInjectionSanitizer
-  or
-  exists(MethodCall mc |
-    mc.getMethod().getNumberOfParameters() = 1 and
-    (
-      mc.getMethod().hasName("sanitizeFilename") or
-      mc.getMethod().hasName("toSafeFilename") or
-      mc.getMethod().hasName("sanitizePathSegment")
-    ) and
-    node = DataFlow::exprNode(mc)
-  )
-  or
-  node = DataFlow::BarrierGuard<safeRelativePathGuard/3>::getABarrierNode()
 }
 
 /** Extension point for project-specific extra taint steps. */

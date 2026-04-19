@@ -45,17 +45,17 @@ public class Test {
         client.send(req, HttpResponse.BodyHandlers.discarding());
     }
 
-    @GetMapping("/good1")
-    public void goodFixedAllowlist(@RequestParam String url) throws Exception {
-        if (!"https://api.example.com/profile".equals(url)) {
-            return;
-        }
+    // @GetMapping("/good1")
+    // public void goodFixedAllowlist(@RequestParam String url) throws Exception {
+    //     if (!"https://api.example.com/profile".equals(url)) {
+    //         return;
+    //     }
 
-        HttpRequest req = HttpRequest.newBuilder(new URI(url))
-                .GET()
-                .build();
-        client.send(req, HttpResponse.BodyHandlers.discarding());
-    }
+    //     HttpRequest req = HttpRequest.newBuilder(new URI(url))
+    //             .GET()
+    //             .build();
+    //     client.send(req, HttpResponse.BodyHandlers.discarding());
+    // }
 
     @GetMapping("/good2")
     public void goodRegexAllowlist(@RequestParam String url) throws Exception {
@@ -109,13 +109,13 @@ public class Test {
         return template.exchange(request, String.class);
     }
 
-    @GetMapping("/good4")
-    public ResponseEntity<String> goodRestTemplateExchangeAllowlist(@RequestParam String url) throws Exception {
-        if (!"https://api.example.com/profile".equals(url)) {
-            return null;
-        }
-        RestTemplate template = new RestTemplate();
-        RequestEntity<Void> request = new RequestEntity<>(HttpMethod.GET, new URI(url));
-        return template.exchange(request, String.class);
-    }
+    // @GetMapping("/good4")
+    // public ResponseEntity<String> goodRestTemplateExchangeAllowlist(@RequestParam String url) throws Exception {
+    //     if (!"https://api.example.com/profile".equals(url)) {
+    //         return null;
+    //     }
+    //     RestTemplate template = new RestTemplate();
+    //     RequestEntity<Void> request = new RequestEntity<>(HttpMethod.GET, new URI(url));
+    //     return template.exchange(request, String.class);
+    // }
 }

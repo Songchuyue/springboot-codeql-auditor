@@ -1,0 +1,16 @@
+# Maven build outputs
+**/target/
+
+# CodeQL outputs
+**/codeql-db/
+**/codeql-out/
+
+# CodeQL test artifacts
+**/*.actual
+**/*.bqrs
+**/*.testproj/
+
+# IDE / OS
+.vscode/
+.DS_Store
+Thumbs.db

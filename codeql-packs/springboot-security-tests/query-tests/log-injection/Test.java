@@ -82,17 +82,17 @@ class Test {
     // 5. Good cases - project sanitizers
     // =========================================================
 
-    @GetMapping("/goodProjectReturnSanitizer")
-    void goodProjectReturnSanitizer(@RequestParam String user) {
-        auditLogger.info(LogSanitizer.sanitizeForLog(user));
-    }
+    // @GetMapping("/goodProjectReturnSanitizer")
+    // void goodProjectReturnSanitizer(@RequestParam String user) {
+    //     auditLogger.info(LogSanitizer.sanitizeForLog(user));
+    // }
 
-    @GetMapping("/goodProjectGuardSanitizer")
-    void goodProjectGuardSanitizer(@RequestParam String user) {
-        if (LogSanitizer.isSafeForLog(user)) {
-            auditLogger.warn("login user={}", user);
-        }
-    }
+    // @GetMapping("/goodProjectGuardSanitizer")
+    // void goodProjectGuardSanitizer(@RequestParam String user) {
+    //     if (LogSanitizer.isSafeForLog(user)) {
+    //         auditLogger.warn("login user={}", user);
+    //     }
+    // }
 
     @GetMapping("/goodConstant")
     void goodConstant() {

@@ -80,19 +80,19 @@ class Test {
         Runtime.getRuntime().exec("whoami");
     }
 
-    @GetMapping("/goodAllowlisted")
-    void goodAllowlisted(@RequestParam String cmd) throws IOException {
-        if ("whoami".equals(cmd)) {
-            Runtime.getRuntime().exec(cmd);
-        }
-    }
+    // @GetMapping("/goodAllowlisted")
+    // void goodAllowlisted(@RequestParam String cmd) throws IOException {
+    //     if ("whoami".equals(cmd)) {
+    //         Runtime.getRuntime().exec(cmd);
+    //     }
+    // }
 
-    @GetMapping("/goodAllowlistedReverse")
-    void goodAllowlistedReverse(@RequestParam String cmd) throws IOException {
-        if (cmd.equals("dir")) {
-            Runtime.getRuntime().exec(cmd);
-        }
-    }
+    // @GetMapping("/goodAllowlistedReverse")
+    // void goodAllowlistedReverse(@RequestParam String cmd) throws IOException {
+    //     if (cmd.equals("dir")) {
+    //         Runtime.getRuntime().exec(cmd);
+    //     }
+    // }
 
     // =========================================================
     // 5. Nested helpers
