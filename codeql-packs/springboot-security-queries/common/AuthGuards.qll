@@ -21,35 +21,37 @@ predicate hasAuthorizationAnnotation(Method m) {
 }
 
 bindingset[n]
-private predicate authLikeMethodName(string n) {
+private predicate authLikeEnforcingMethodName(string n) {
   n.matches("checkAuth%") or
   n.matches("checkPerm%") or
   n.matches("checkPermission%") or
   n.matches("requireAuth%") or
   n.matches("requireRole%") or
+  n.matches("requirePermission%") or
   n.matches("verifyAuth%") or
   n.matches("verifyPermission%") or
   n.matches("assertRole%") or
   n.matches("assertPermission%") or
-  n.matches("hasRole%") or
-  n.matches("hasPermission%") or
-  n.matches("isAdmin%")
+  n.matches("authorize%") or
+  n.matches("enforce%")
+}
+
+private predicate authLikeGuardType(RefType t) {
+  t.getName().matches("%Auth%") or
+  t.getName().matches("%Permission%") or
+  t.getName().matches("%AccessControl%") or
+  t.getName().matches("%Authorization%")
 }
 
 predicate hasAuthorizationGuardCall(Method m) {
   exists(MethodCall mc |
     mc.getEnclosingCallable() = m and
     (
-      authLikeMethodName(mc.getMethod().getName())
+      authLikeEnforcingMethodName(mc.getMethod().getName())
       or
-      exists(RefType t |
-        t = mc.getMethod().getDeclaringType() and
-        (
-          t.getName().matches("%Auth%") or
-          t.getName().matches("%Permission%") or
-          t.getName().matches("%Security%") or
-          t.getName().matches("%AccessControl%")
-        )
+      (
+        authLikeGuardType(mc.getMethod().getDeclaringType()) and
+        authLikeEnforcingMethodName(mc.getMethod().getName())
       )
     )
   )

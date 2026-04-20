@@ -3,8 +3,7 @@ import common.AuthGuards
 
 private predicate isControllerAnnotation(Annotation ann) {
   ann.getType().hasQualifiedName("org.springframework.web.bind.annotation", "RestController") or
-  ann.getType().hasQualifiedName("org.springframework.stereotype", "Controller") or
-  ann.getType().hasQualifiedName("org.springframework.web.bind.annotation", "Controller")
+  ann.getType().hasQualifiedName("org.springframework.stereotype", "Controller")
 }
 
 private predicate isRequestMappingAnnotation(Annotation ann) {
@@ -45,12 +44,41 @@ private predicate sensitiveToken(string s) {
   s.matches("%permission%") or s.matches("%Permission%")
 }
 
+private predicate mappingValueLooksSensitive(Annotation ann) {
+  exists(Expr v |
+    v = ann.getValue("value") and
+    sensitiveToken(v.toString())
+  )
+  or
+  exists(Expr v |
+    v = ann.getValue("path") and
+    sensitiveToken(v.toString())
+  )
+  or
+  sensitiveToken(ann.toString())
+}
+
+private predicate routeLooksSensitive(Method m) {
+  exists(Annotation ann |
+    ann = m.getAnAnnotation() and
+    isRequestMappingAnnotation(ann) and
+    mappingValueLooksSensitive(ann)
+  )
+  or
+  exists(Annotation ann |
+    ann = m.getDeclaringType().getAnAnnotation() and
+    ann.getType().hasQualifiedName("org.springframework.web.bind.annotation", "RequestMapping") and
+    mappingValueLooksSensitive(ann)
+  )
+}
+
 predicate isSensitiveEndpoint(Method m) {
   isSpringEndpoint(m) and
   (
     sensitiveToken(m.getName()) or
     sensitiveToken(m.getDeclaringType().getName()) or
-    sensitiveToken(m.getDeclaringType().getQualifiedName())
+    sensitiveToken(m.getDeclaringType().getQualifiedName()) or
+    routeLooksSensitive(m)
   )
 }
 

@@ -1,1 +1,4 @@
-| Test.java:11:12:11:23 | badListUsers | Sensitive Spring endpoint appears reachable without authorization annotation or explicit authorization guard. |
+| Test.java:15:10:15:21 | badListUsers | Sensitive Spring endpoint appears reachable without authorization annotation or explicit authorization guard. |
+| Test.java:51:10:51:26 | badAdminRouteOnly | Sensitive Spring endpoint appears reachable without authorization annotation or explicit authorization guard. |
+| Test.java:64:10:64:30 | badFakeSecurityHelper | Sensitive Spring endpoint appears reachable without authorization annotation or explicit authorization guard. |
+| Test.java:70:10:70:26 | badIgnoredHasRole | Sensitive Spring endpoint appears reachable without authorization annotation or explicit authorization guard. |
