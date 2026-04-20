@@ -1,0 +1,1 @@
+| Test.java:11:12:11:23 | badListUsers | Sensitive Spring endpoint appears reachable without authorization annotation or explicit authorization guard. |
