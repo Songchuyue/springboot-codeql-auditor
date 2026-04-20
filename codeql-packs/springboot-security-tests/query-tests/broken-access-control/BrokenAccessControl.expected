@@ -2,3 +2,5 @@
 | Test.java:51:10:51:26 | badAdminRouteOnly | Sensitive Spring endpoint appears reachable without authorization annotation or explicit authorization guard. |
 | Test.java:64:10:64:30 | badFakeSecurityHelper | Sensitive Spring endpoint appears reachable without authorization annotation or explicit authorization guard. |
 | Test.java:70:10:70:26 | badIgnoredHasRole | Sensitive Spring endpoint appears reachable without authorization annotation or explicit authorization guard. |
+| Test.java:108:12:108:38 | badAuthorizeLikeButNotGuard | Sensitive Spring endpoint appears reachable without authorization annotation or explicit authorization guard. |
+| Test.java:118:12:118:27 | badPathOnlyAdmin | Sensitive Spring endpoint appears reachable without authorization annotation or explicit authorization guard. |

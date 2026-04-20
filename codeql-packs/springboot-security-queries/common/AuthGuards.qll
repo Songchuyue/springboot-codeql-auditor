@@ -43,16 +43,22 @@ private predicate authLikeGuardType(RefType t) {
   t.getName().matches("%Authorization%")
 }
 
+private predicate isLocalAuthHelperCall(Method m, MethodCall mc) {
+  mc.getEnclosingCallable() = m and
+  mc.getMethod().getDeclaringType() = m.getDeclaringType() and
+  authLikeEnforcingMethodName(mc.getMethod().getName())
+}
+
+private predicate isGuardServiceCall(Method m, MethodCall mc) {
+  mc.getEnclosingCallable() = m and
+  authLikeGuardType(mc.getMethod().getDeclaringType()) and
+  authLikeEnforcingMethodName(mc.getMethod().getName())
+}
+
 predicate hasAuthorizationGuardCall(Method m) {
   exists(MethodCall mc |
-    mc.getEnclosingCallable() = m and
-    (
-      authLikeEnforcingMethodName(mc.getMethod().getName())
-      or
-      (
-        authLikeGuardType(mc.getMethod().getDeclaringType()) and
-        authLikeEnforcingMethodName(mc.getMethod().getName())
-      )
-    )
+    isLocalAuthHelperCall(m, mc)
+    or
+    isGuardServiceCall(m, mc)
   )
 }

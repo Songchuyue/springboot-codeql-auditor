@@ -95,3 +95,27 @@ class ProtectedAdminController {
     return "ok";
   }
 }
+
+class ReportFormatter {
+    void authorizeFormat() {
+    }
+}
+
+@RestController
+class FormatController {
+
+    @GetMapping("/admin/format")
+    String badAuthorizeLikeButNotGuard() {
+        new ReportFormatter().authorizeFormat();
+        return "bad";
+    }
+}
+
+@RestController
+class PathOnlyController {
+
+    @GetMapping(path = "/admin/path-only")
+    String badPathOnlyAdmin() {
+        return "bad";
+    }
+}
