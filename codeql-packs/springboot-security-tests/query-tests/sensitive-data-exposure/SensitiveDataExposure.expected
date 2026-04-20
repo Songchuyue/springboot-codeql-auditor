@@ -1,35 +1,39 @@
 edges
-| Test.java:5:19:5:33 | password : String | Test.java:6:26:6:33 | password | provenance |  |
-| Test.java:14:35:14:49 | getPassword(...) : String | Test.java:14:26:14:49 | ... + ... | provenance |  |
-| Test.java:19:9:19:10 | sb [post update] : StringBuilder | Test.java:20:26:20:27 | sb : StringBuilder | provenance |  |
-| Test.java:19:19:19:33 | getPassword(...) : String | Test.java:19:9:19:10 | sb [post update] : StringBuilder | provenance | Config |
-| Test.java:19:19:19:33 | getPassword(...) : String | Test.java:19:9:19:10 | sb [post update] : StringBuilder | provenance | MaD:44184 |
-| Test.java:20:26:20:27 | sb : StringBuilder | Test.java:20:26:20:38 | toString(...) | provenance | Config |
-| Test.java:20:26:20:27 | sb : StringBuilder | Test.java:20:26:20:38 | toString(...) | provenance | MaD:44199 |
-| Test.java:24:26:24:65 | new ..[] { .. } : Object[] [[]] : String | Test.java:24:26:24:65 | format(...) | provenance | MaD:44224 |
-| Test.java:24:50:24:64 | getPassword(...) : String | Test.java:24:26:24:65 | format(...) | provenance | Config |
-| Test.java:24:50:24:64 | getPassword(...) : String | Test.java:24:26:24:65 | new ..[] { .. } : Object[] [[]] : String | provenance |  |
-| Test.java:27:22:27:33 | token : String | Test.java:28:32:28:36 | token | provenance |  |
+| Test.java:16:19:16:47 | password : String | Test.java:17:21:17:28 | password | provenance | Sink:MaD:50776 |
+| Test.java:27:30:27:44 | getPassword(...) : String | Test.java:27:21:27:44 | ... + ... | provenance | Sink:MaD:50776 |
+| Test.java:33:9:33:10 | sb [post update] : StringBuilder | Test.java:34:21:34:22 | sb : StringBuilder | provenance |  |
+| Test.java:33:19:33:33 | getPassword(...) : String | Test.java:33:9:33:10 | sb [post update] : StringBuilder | provenance | Config |
+| Test.java:33:19:33:33 | getPassword(...) : String | Test.java:33:9:33:10 | sb [post update] : StringBuilder | provenance | MaD:44184 |
+| Test.java:34:21:34:22 | sb : StringBuilder | Test.java:34:21:34:33 | toString(...) | provenance | Config Sink:MaD:50776 |
+| Test.java:34:21:34:22 | sb : StringBuilder | Test.java:34:21:34:33 | toString(...) | provenance | MaD:44199 Sink:MaD:50776 |
+| Test.java:39:21:39:60 | new ..[] { .. } : Object[] [[]] : String | Test.java:39:21:39:60 | format(...) | provenance | MaD:44224 Sink:MaD:50776 |
+| Test.java:39:45:39:59 | getPassword(...) : String | Test.java:39:21:39:60 | format(...) | provenance | Config Sink:MaD:50776 |
+| Test.java:39:45:39:59 | getPassword(...) : String | Test.java:39:21:39:60 | new ..[] { .. } : Object[] [[]] : String | provenance |  |
+| Test.java:43:22:43:47 | token : String | Test.java:44:32:44:36 | token | provenance | Sink:MaD:44065 |
+| Test.java:48:27:48:52 | token : String | Test.java:49:32:49:36 | token | provenance |  |
 nodes
-| Test.java:5:19:5:33 | password : String | semmle.label | password : String |
-| Test.java:6:26:6:33 | password | semmle.label | password |
-| Test.java:10:26:10:36 | accessToken | semmle.label | accessToken |
-| Test.java:14:26:14:49 | ... + ... | semmle.label | ... + ... |
-| Test.java:14:35:14:49 | getPassword(...) : String | semmle.label | getPassword(...) : String |
-| Test.java:19:9:19:10 | sb [post update] : StringBuilder | semmle.label | sb [post update] : StringBuilder |
-| Test.java:19:19:19:33 | getPassword(...) : String | semmle.label | getPassword(...) : String |
-| Test.java:20:26:20:27 | sb : StringBuilder | semmle.label | sb : StringBuilder |
-| Test.java:20:26:20:38 | toString(...) | semmle.label | toString(...) |
-| Test.java:24:26:24:65 | format(...) | semmle.label | format(...) |
-| Test.java:24:26:24:65 | new ..[] { .. } : Object[] [[]] : String | semmle.label | new ..[] { .. } : Object[] [[]] : String |
-| Test.java:24:50:24:64 | getPassword(...) : String | semmle.label | getPassword(...) : String |
-| Test.java:27:22:27:33 | token : String | semmle.label | token : String |
-| Test.java:28:32:28:36 | token | semmle.label | token |
+| Test.java:16:19:16:47 | password : String | semmle.label | password : String |
+| Test.java:17:21:17:28 | password | semmle.label | password |
+| Test.java:22:21:22:31 | accessToken | semmle.label | accessToken |
+| Test.java:27:21:27:44 | ... + ... | semmle.label | ... + ... |
+| Test.java:27:30:27:44 | getPassword(...) : String | semmle.label | getPassword(...) : String |
+| Test.java:33:9:33:10 | sb [post update] : StringBuilder | semmle.label | sb [post update] : StringBuilder |
+| Test.java:33:19:33:33 | getPassword(...) : String | semmle.label | getPassword(...) : String |
+| Test.java:34:21:34:22 | sb : StringBuilder | semmle.label | sb : StringBuilder |
+| Test.java:34:21:34:33 | toString(...) | semmle.label | toString(...) |
+| Test.java:39:21:39:60 | format(...) | semmle.label | format(...) |
+| Test.java:39:21:39:60 | new ..[] { .. } : Object[] [[]] : String | semmle.label | new ..[] { .. } : Object[] [[]] : String |
+| Test.java:39:45:39:59 | getPassword(...) : String | semmle.label | getPassword(...) : String |
+| Test.java:43:22:43:47 | token : String | semmle.label | token : String |
+| Test.java:44:32:44:36 | token | semmle.label | token |
+| Test.java:48:27:48:52 | token : String | semmle.label | token : String |
+| Test.java:49:32:49:36 | token | semmle.label | token |
 subpaths
 #select
-| Test.java:6:26:6:33 | password | Test.java:5:19:5:33 | password : String | Test.java:6:26:6:33 | password | Sensitive data reaches a project log sink or response-like output. |
-| Test.java:10:26:10:36 | accessToken | Test.java:10:26:10:36 | accessToken | Test.java:10:26:10:36 | accessToken | Sensitive data reaches a project log sink or response-like output. |
-| Test.java:14:26:14:49 | ... + ... | Test.java:14:35:14:49 | getPassword(...) : String | Test.java:14:26:14:49 | ... + ... | Sensitive data reaches a project log sink or response-like output. |
-| Test.java:20:26:20:38 | toString(...) | Test.java:19:19:19:33 | getPassword(...) : String | Test.java:20:26:20:38 | toString(...) | Sensitive data reaches a project log sink or response-like output. |
-| Test.java:24:26:24:65 | format(...) | Test.java:24:50:24:64 | getPassword(...) : String | Test.java:24:26:24:65 | format(...) | Sensitive data reaches a project log sink or response-like output. |
-| Test.java:28:32:28:36 | token | Test.java:27:22:27:33 | token : String | Test.java:28:32:28:36 | token | Sensitive data reaches a project log sink or response-like output. |
+| Test.java:17:21:17:28 | password | Test.java:16:19:16:47 | password : String | Test.java:17:21:17:28 | password | Sensitive data reaches a project log sink or response-like output. |
+| Test.java:22:21:22:31 | accessToken | Test.java:22:21:22:31 | accessToken | Test.java:22:21:22:31 | accessToken | Sensitive data reaches a project log sink or response-like output. |
+| Test.java:27:21:27:44 | ... + ... | Test.java:27:30:27:44 | getPassword(...) : String | Test.java:27:21:27:44 | ... + ... | Sensitive data reaches a project log sink or response-like output. |
+| Test.java:34:21:34:33 | toString(...) | Test.java:33:19:33:33 | getPassword(...) : String | Test.java:34:21:34:33 | toString(...) | Sensitive data reaches a project log sink or response-like output. |
+| Test.java:39:21:39:60 | format(...) | Test.java:39:45:39:59 | getPassword(...) : String | Test.java:39:21:39:60 | format(...) | Sensitive data reaches a project log sink or response-like output. |
+| Test.java:44:32:44:36 | token | Test.java:43:22:43:47 | token : String | Test.java:44:32:44:36 | token | Sensitive data reaches a project log sink or response-like output. |
+| Test.java:49:32:49:36 | token | Test.java:48:27:48:52 | token : String | Test.java:49:32:49:36 | token | Sensitive data reaches a project log sink or response-like output. |
