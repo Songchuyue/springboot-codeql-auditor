@@ -1,4 +1,4 @@
-- description: Stable seven security queries for current stage
+- description: Stable default security queries for current stage
 - query: src/sql-injection/SqlInjection.ql
 - query: src/sql-injection/MyBatisXmlDollarPlaceholderSqlInjection.ql
 - query: src/ssrf/Ssrf.ql
@@ -7,3 +7,6 @@
 - query: src/xss/Xss.ql
 - query: src/log-injection/LogInjection.ql
 - query: src/unsafe-deserialization/UnsafeDeserialization.ql
+- query: src/broken-access-control/BrokenAccessControl.ql
+- query: src/sensitive-data-exposure/SensitiveDataExposure.ql
+- query: src/unsafe-file-upload/UnsafeFileUpload.ql

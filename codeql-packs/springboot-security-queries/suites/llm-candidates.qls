@@ -1,4 +1,4 @@
-- description: High-recall candidate queries for LLM triage.
+- description: Experimental high-recall candidate queries for optional LLM triage
 - query: src/sql-injection/SqlInjection.ql
 - query: src/sql-injection/MyBatisXmlDollarPlaceholderSqlInjection.ql
 - query: src/ssrf/Ssrf.ql
