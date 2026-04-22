@@ -1,0 +1,5 @@
+- description: Official CodeQL benchmark suite for Java (SQLi, Command Injection, Path Traversal, XSS)
+- query: D:\CodeQL\codeql-bundle-win64\codeql\qlpacks\codeql\java-queries\1.10.7\Security\CWE\CWE-089\SqlTainted.ql
+- query: D:\CodeQL\codeql-bundle-win64\codeql\qlpacks\codeql\java-queries\1.10.7\Security\CWE\CWE-078\ExecTainted.ql
+- query: D:\CodeQL\codeql-bundle-win64\codeql\qlpacks\codeql\java-queries\1.10.7\Security\CWE\CWE-022\TaintedPath.ql
+- query: D:\CodeQL\codeql-bundle-win64\codeql\qlpacks\codeql\java-queries\1.10.7\Security\CWE\CWE-079\XSS.ql
