@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.songchuyue.bench.mybatis.OrderMapper">
+
+    <!-- BENCH: SQL-MYBATIS-DOLLAR-VULN -->
+    <select id="listUsersVuln" resultType="string">
+        SELECT username
+        FROM users
+        ORDER BY ${orderBy}
+    </select>
+
+    <!-- BENCH: SQL-MYBATIS-DOLLAR-SAFE -->
+    <select id="listUsersSafe" resultType="string">
+        SELECT username
+        FROM users
+        ORDER BY id
+    </select>
+
+</mapper>
