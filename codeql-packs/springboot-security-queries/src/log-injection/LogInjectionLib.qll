@@ -1,10 +1,9 @@
 import java
-
-import semmle.code.java.controlflow.Guards
 import semmle.code.java.dataflow.DataFlow
 import semmle.code.java.frameworks.spring.SpringController
 import semmle.code.java.security.LogInjection
 import common.SpringAopModel
+import common.SpringBeanModel
 import common.CommonTaintSteps
 
 predicate isOfficialSpringMvcSourceNode(DataFlow::Node src) {
@@ -14,34 +13,49 @@ predicate isOfficialSpringMvcSourceNode(DataFlow::Node src) {
   )
 }
 
-
-// 判定该类的类型名中是否包括Logger, LogUtil, LoggingService, 但不包括org.slf4j.Logger
 private predicate isProjectLoggerLikeType(RefType t) {
   not t.hasQualifiedName("org.slf4j", "Logger") and
+  not t.hasQualifiedName("java.util.logging", "Logger") and
   (
     t.getName().matches("%Logger%") or
     t.getName().matches("%LogUtil%") or
-    t.getName().matches("%LoggingService%")
+    t.getName().matches("%LoggingService%") or
+    t.getName().matches("%Audit%") or
+    t.getName().matches("%AuditService%") or
+    t.getName().matches("%AuditLog%") or
+    t.getName().matches("%OperationLog%") or
+    t.getName().matches("%LogService%")
   )
 }
 
-// 判定该方法属于Logger, LogUtil, LoggingService, 且名为trace, debug, info, warn, error, log
+private predicate isProjectLoggingMethodName(string name) {
+  name = "trace" or
+  name = "debug" or
+  name = "info" or
+  name = "warn" or
+  name = "error" or
+  name = "log" or
+  name = "record" or
+  name = "audit" or
+  name = "saveLog"
+}
+
 private predicate isProjectLoggingMethod(Method m) {
   exists(RefType t |
     t = m.getDeclaringType() and
     isProjectLoggerLikeType(t)
   ) and
-  (
-    m.hasName("trace") or
-    m.hasName("debug") or
-    m.hasName("info") or
-    m.hasName("warn") or
-    m.hasName("error") or
-    m.hasName("log")
+  isProjectLoggingMethodName(m.getName())
+}
+
+private predicate isInjectedProjectLoggingCall(MethodCall mc) {
+  isProjectLoggingMethodName(mc.getMethod().getName()) and
+  exists(RefType impl |
+    injectedFieldReceiverCallMayResolveToBeanType(mc, impl) and
+    isProjectLoggerLikeType(impl)
   )
 }
 
-// 识别 slf4j Logger 的常见日志方法
 private predicate isSlf4jLoggingMethod(Method m) {
   m.getDeclaringType().hasQualifiedName("org.slf4j", "Logger") and
   (
@@ -53,7 +67,6 @@ private predicate isSlf4jLoggingMethod(Method m) {
   )
 }
 
-// “任何日志方法” = slf4j 官方 logger + 你项目里的 wrapper logger
 private predicate isAnyLoggingMethod(Method m) {
   isSlf4jLoggingMethod(m) or
   isProjectLoggingMethod(m)
@@ -62,7 +75,10 @@ private predicate isAnyLoggingMethod(Method m) {
 private predicate adviceLoggedExpr(Method advice, Expr logged) {
   exists(MethodCall mc |
     mc.getEnclosingCallable() = advice and
-    isAnyLoggingMethod(mc.getMethod()) and
+    (
+      isAnyLoggingMethod(mc.getMethod()) or
+      isInjectedProjectLoggingCall(mc)
+    ) and
     logged = mc.getAnArgument()
   )
 }
@@ -93,28 +109,39 @@ private predicate adviceJoinPointGetArgsFlowsToLoggedExpr(Method advice, MethodC
   )
 }
 
-// 将上一个谓词的方法的变量转为sink node
+private predicate isProjectLogMessageArgument(MethodCall mc, Expr arg) {
+  (isProjectLoggingMethod(mc.getMethod()) or isInjectedProjectLoggingCall(mc)) and
+  (
+    arg = mc.getArgument(0)
+    or
+    exists(StringLiteral fmt |
+      fmt = mc.getArgument(0) and
+      arg = mc.getAnArgument() and
+      arg != fmt
+    )
+  )
+}
+
 private class ProjectLoggerSink extends LogInjectionSink {
   ProjectLoggerSink() {
     exists(MethodCall mc, Expr arg |
-      isProjectLoggingMethod(mc.getMethod()) and
-      arg = mc.getAnArgument() and
+      isProjectLogMessageArgument(mc, arg) and
       this.asExpr() = arg
     )
   }
 }
 
-// 同上
 predicate isProjectLogInjectionSink(DataFlow::Node sink) {
   sink instanceof ProjectLoggerSink
 }
 
-predicate isProjectLogInjectionSanitizer(DataFlow::Node node) { none() }
+predicate isProjectLogInjectionSanitizer(DataFlow::Node node) {
+  none()
+}
 
 predicate isProjectLogInjectionFlowStep(DataFlow::Node pred, DataFlow::Node succ) {
   isCommonStringAssemblyStep(pred, succ)
   or
-  // 目标方法调用实参 -> advice 的普通参数
   exists(MethodCall targetCall, Method advice, Method target, Parameter p, Expr arg |
     target = targetCall.getMethod() and
     adviceMayMatchMethod(advice, target) and
@@ -124,7 +151,6 @@ predicate isProjectLogInjectionFlowStep(DataFlow::Node pred, DataFlow::Node succ
     succ = DataFlow::parameterNode(p)
   )
   or
-  // 目标方法调用实参 -> advice 中的 JoinPoint.getArgs()
   exists(MethodCall targetCall, Method advice, Method target, MethodCall getArgsCall, Expr arg |
     target = targetCall.getMethod() and
     adviceMayMatchMethod(advice, target) and

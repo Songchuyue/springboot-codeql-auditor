@@ -25,6 +25,10 @@ module SpringSensitiveDataExposureConfig implements DataFlow::ConfigSig {
     isSensitiveExposureSinkNode(sink)
   }
 
+  predicate isBarrier(DataFlow::Node node) {
+    isSensitiveExposureSanitizerNode(node)
+  }
+
   predicate isAdditionalFlowStep(DataFlow::Node pred, DataFlow::Node succ) {
     isSensitiveExposureAdditionalFlowStep(pred, succ)
   }

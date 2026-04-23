@@ -396,7 +396,7 @@ predicate isPreferredBeanCandidateForInjection(Annotatable injectionPoint, RefTy
   )
 }
 
-/** -----------------------------
+/* -----------------------------
  *  DI resolution / alias helpers
  *  -----------------------------
  * 目的：
