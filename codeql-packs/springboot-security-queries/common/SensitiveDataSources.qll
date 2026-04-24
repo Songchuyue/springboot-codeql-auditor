@@ -3,21 +3,41 @@ import semmle.code.java.dataflow.DataFlow
 
 bindingset[s]
 private predicate sensitiveName(string s) {
-  s.matches("%password%") or s.matches("%Password%") or
-  s.matches("%passwd%") or s.matches("%Passwd%") or
-  s.matches("%pwd%") or s.matches("%Pwd%") or
-  s.matches("%secret%") or s.matches("%Secret%") or
-  s.matches("%token%") or s.matches("%Token%") or
-  s.matches("%apiKey%") or s.matches("%ApiKey%") or
-  s.matches("%accessToken%") or s.matches("%AccessToken%") or
-  s.matches("%refreshToken%") or s.matches("%RefreshToken%") or
-  s.matches("%credential%") or s.matches("%Credential%") or
-  s.matches("%privateKey%") or s.matches("%PrivateKey%") or
-  s.matches("%sessionId%") or s.matches("%SessionId%") or
-  s.matches("%sessionKey%") or s.matches("%SessionKey%") or
-  s.matches("%phone%") or s.matches("%Phone%") or
-  s.matches("%mobile%") or s.matches("%Mobile%") or
-  s.matches("%idCard%") or s.matches("%IdCard%")
+  s.matches("%password%") or
+  s.matches("%Password%") or
+  s.matches("%passwd%") or
+  s.matches("%Passwd%") or
+  s.matches("%pwd%") or
+  s.matches("%Pwd%") or
+  s.matches("%secret%") or
+  s.matches("%Secret%") or
+  s.matches("%token%") or
+  s.matches("%Token%") or
+  s.matches("%apiKey%") or
+  s.matches("%ApiKey%") or
+  s.matches("%accessToken%") or
+  s.matches("%AccessToken%") or
+  s.matches("%refreshToken%") or
+  s.matches("%RefreshToken%") or
+  s.matches("%credential%") or
+  s.matches("%Credential%") or
+  s.matches("%privateKey%") or
+  s.matches("%PrivateKey%") or
+  s.matches("%sessionId%") or
+  s.matches("%SessionId%") or
+  s.matches("%sessionKey%") or
+  s.matches("%SessionKey%") or
+  s.matches("%phone%") or
+  s.matches("%Phone%") or
+  s.matches("%mobile%") or
+  s.matches("%Mobile%") or
+  s.matches("%idCard%") or
+  s.matches("%IdCard%")
+}
+
+bindingset[s]
+predicate isSensitiveName(string s) {
+  sensitiveName(s)
 }
 
 predicate isSensitiveDataSourceNode(DataFlow::Node src) {

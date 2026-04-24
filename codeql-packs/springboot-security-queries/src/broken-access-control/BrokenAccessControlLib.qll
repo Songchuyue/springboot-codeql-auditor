@@ -1,5 +1,6 @@
 import java
 import common.AuthGuards
+import common.SpringAopModel
 
 private predicate isControllerAnnotation(Annotation ann) {
   ann.getType().hasQualifiedName("org.springframework.web.bind.annotation", "RestController") or
@@ -82,9 +83,52 @@ predicate isSensitiveEndpoint(Method m) {
   )
 }
 
+bindingset[n]
+private predicate authorizationAopName(string n) {
+  n.matches("%Auth%") or
+  n.matches("%auth%") or
+  n.matches("%Permission%") or
+  n.matches("%permission%") or
+  n.matches("%Access%") or
+  n.matches("%access%") or
+  n.matches("%Security%") or
+  n.matches("%security%") or
+  n.matches("%Role%") or
+  n.matches("%role%")
+}
+
+/**
+ * 识别“权限型 AOP advice”。
+ *
+ * 三类证据：
+ * 1. advice 方法名 / aspect 类名像权限检查；
+ * 2. advice 自身带 @PreAuthorize / @Secured / @RolesAllowed；
+ * 3. advice 方法体里显式调用权限检查函数。
+ */
+predicate isAuthorizationAopAdvice(Method advice) {
+  isAdviceMethod(advice) and
+  (
+    authorizationAopName(advice.getName()) or
+    authorizationAopName(advice.getDeclaringType().getName()) or
+    hasAuthorizationAnnotation(advice) or
+    hasAuthorizationGuardCall(advice)
+  )
+}
+
+/**
+ * endpoint 是否被权限 AOP advice 实际可能拦截。
+ */
+predicate hasAuthorizationAopAdvice(Method m) {
+  exists(Method advice |
+    isAuthorizationAopAdvice(advice) and
+    adviceMayActuallyInterceptMethod(advice, m)
+  )
+}
+
 predicate isProtectedEndpoint(Method m) {
   hasAuthorizationAnnotation(m) or
-  hasAuthorizationGuardCall(m)
+  hasAuthorizationGuardCall(m) or
+  hasAuthorizationAopAdvice(m)
 }
 
 predicate isBrokenAccessControlCandidate(Method m) {

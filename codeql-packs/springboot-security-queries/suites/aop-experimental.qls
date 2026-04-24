@@ -1,0 +1,4 @@
+- description: Experimental Spring AOP semantic checks
+- query: src/broken-access-control/AopAuthorizationProxyUnsafe.ql
+- query: src/broken-access-control/AopAuthorizationSelfInvocation.ql
+- query: src/sensitive-data-exposure/SensitiveDataExposure.ql

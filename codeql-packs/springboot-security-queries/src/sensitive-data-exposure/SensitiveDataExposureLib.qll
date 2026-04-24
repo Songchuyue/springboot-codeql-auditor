@@ -7,13 +7,51 @@ import common.CommonTaintSteps
 import common.SensitiveDataSources
 import common.ProjectLogging
 import common.SpringBeanModel
+import common.SpringAopModel
+
+/**
+ * AOP advice 中 JoinPoint.getArgs() 可能携带目标方法的敏感参数。
+ *
+ * 例如：
+ *   @Around("execution(* *..UserService.login(..))")
+ *   Object log(ProceedingJoinPoint pjp) {
+ *       log.info("args={}", pjp.getArgs());
+ *       return pjp.proceed();
+ *   }
+ */
+private predicate isAopSensitiveJoinPointArgsSourceNode(DataFlow::Node src) {
+  exists(Method advice, Method target, MethodCall getArgs |
+    isAdviceMethod(advice) and
+    getArgs.getEnclosingCallable() = advice and
+    isJoinPointGetArgsCall(getArgs) and
+    adviceMayMatchMethod(advice, target) and
+    exists(Parameter p |
+      p = target.getAParameter() and
+      isSensitiveName(p.getName())
+    ) and
+    src = DataFlow::exprNode(getArgs)
+  )
+}
 
 predicate isSensitiveExposureSourceNode(DataFlow::Node src) {
-  isSensitiveDataSourceNode(src)
+  isSensitiveDataSourceNode(src) or
+  isAopSensitiveJoinPointArgsSourceNode(src)
+}
+
+private predicate isAopJoinPointArgsStringificationStep(DataFlow::Node pred, DataFlow::Node succ) {
+  exists(MethodCall mc |
+    (
+      mc.getMethod().hasQualifiedName("java.util", "Arrays", "toString") or
+      mc.getMethod().hasQualifiedName("java.lang", "String", "valueOf")
+    ) and
+    pred = DataFlow::exprNode(mc.getArgument(0)) and
+    succ = DataFlow::exprNode(mc)
+  )
 }
 
 predicate isSensitiveExposureAdditionalFlowStep(DataFlow::Node pred, DataFlow::Node succ) {
-  isCommonStringAssemblyStep(pred, succ)
+  isCommonStringAssemblyStep(pred, succ) or
+  isAopJoinPointArgsStringificationStep(pred, succ)
 }
 
 bindingset[n]
