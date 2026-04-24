@@ -62,16 +62,307 @@ private predicate getBeanFactoryName(Method m, string name) {
   name = m.getName()
 }
 
-/** -----------------------------
- *  Bean stereotypes
- *  ----------------------------- */
-private predicate isSpringBeanStereotype(Annotation ann) {
-  ann.getType().hasQualifiedName("org.springframework.stereotype", "Controller") or
-  ann.getType().hasQualifiedName("org.springframework.stereotype", "Service") or
-  ann.getType().hasQualifiedName("org.springframework.stereotype", "Component") or
-  ann.getType().hasQualifiedName("org.springframework.stereotype", "Repository")
+/**
+ * -----------------------------
+ * Component scan approximation
+ * -----------------------------
+ *
+ * 目标：
+ * - 支持 @SpringBootApplication 默认扫描包
+ * - 支持 @SpringBootApplication(scanBasePackages / scanBasePackageClasses)
+ * - 支持 @ComponentScan(value / basePackages / basePackageClasses)
+ * - 支持 @ComponentScans 包装形式
+ * - 支持自定义 stereotype，即元注解带 @Component
+ * - 仅支持低成本 excludeFilters:
+ *   1) FilterType.ANNOTATION
+ *   2) FilterType.ASSIGNABLE_TYPE
+ *
+ * 不处理：
+ * - @Profile / @Conditional 的运行期条件
+ * - starter 自动配置
+ * - XML component-scan
+ * - includeFilters 的复杂扩展
+ * - REGEX / ASPECTJ / CUSTOM filter
+ */
+
+private predicate isComponentScanAnnotation(Annotation ann) {
+  ann.getType().hasQualifiedName("org.springframework.context.annotation", "ComponentScan")
 }
 
+private predicate isComponentScansAnnotation(Annotation ann) {
+  ann.getType().hasQualifiedName("org.springframework.context.annotation", "ComponentScans")
+}
+
+private predicate isSpringBootApplicationAnnotation(Annotation ann) {
+  ann.getType().hasQualifiedName("org.springframework.boot.autoconfigure", "SpringBootApplication")
+}
+
+/**
+ * 直接或通过 @ComponentScans 取得 @ComponentScan。
+ */
+private predicate getDeclaredComponentScanAnnotation(RefType configType, Annotation scan) {
+  scan = configType.getAnAnnotation() and
+  isComponentScanAnnotation(scan)
+  or
+  exists(Annotation scans |
+    scans = configType.getAnAnnotation() and
+    isComponentScansAnnotation(scans) and
+    scan = scans.getAnArrayValue("value")
+  )
+}
+
+/**
+ * 读取注解上的 String 或 String[] 属性。
+ *
+ * 例如：
+ * - @ComponentScan("com.foo")
+ * - @ComponentScan(basePackages = {"com.foo", "com.bar"})
+ * - @SpringBootApplication(scanBasePackages = "com.foo")
+ */
+private predicate getAnnotationStringOrStringArrayValue(Annotation ann, string attr, string value) {
+  value = ann.getStringValue(attr) and
+  value != ""
+  or
+  value = ann.getAStringArrayValue(attr) and
+  value != ""
+}
+
+/**
+ * 读取 Class 或 Class[] 属性对应类型的包名。
+ *
+ * 例如：
+ * - @ComponentScan(basePackageClasses = Marker.class)
+ * - @SpringBootApplication(scanBasePackageClasses = Marker.class)
+ */
+private predicate getAnnotationTypeOrTypeArrayPackage(Annotation ann, string attr, string pkg) {
+  exists(RefType marker |
+    marker = ann.getTypeValue(attr) and
+    pkg = marker.getPackage().getName()
+  )
+  or
+  exists(RefType marker |
+    marker = ann.getATypeArrayValue(attr) and
+    pkg = marker.getPackage().getName()
+  )
+}
+
+/**
+ * @ComponentScan 显式配置的扫描根包。
+ */
+private predicate getExplicitComponentScanBasePackage(RefType configType, string pkg) {
+  exists(Annotation scan |
+    getDeclaredComponentScanAnnotation(configType, scan) and
+    (
+      getAnnotationStringOrStringArrayValue(scan, "value", pkg)
+      or
+      getAnnotationStringOrStringArrayValue(scan, "basePackages", pkg)
+      or
+      getAnnotationTypeOrTypeArrayPackage(scan, "basePackageClasses", pkg)
+    )
+  )
+}
+
+/**
+ * @SpringBootApplication 显式配置的扫描根包。
+ */
+private predicate getExplicitSpringBootScanBasePackage(RefType configType, string pkg) {
+  exists(Annotation ann |
+    ann = configType.getAnAnnotation() and
+    isSpringBootApplicationAnnotation(ann) and
+    (
+      getAnnotationStringOrStringArrayValue(ann, "scanBasePackages", pkg)
+      or
+      getAnnotationTypeOrTypeArrayPackage(ann, "scanBasePackageClasses", pkg)
+    )
+  )
+}
+
+/**
+ * 是否是声明 component scan 的配置类。
+ */
+private predicate declaresComponentScan(RefType configType) {
+  exists(Annotation scan | getDeclaredComponentScanAnnotation(configType, scan))
+  or
+  exists(Annotation ann |
+    ann = configType.getAnAnnotation() and
+    isSpringBootApplicationAnnotation(ann)
+  )
+}
+
+/**
+ * 统一后的扫描根包。
+ *
+ * 规则：
+ * - 如果显式声明 base package，则使用显式值；
+ * - 否则 @ComponentScan / @SpringBootApplication 默认扫描声明类所在包。
+ */
+private predicate getComponentScanBasePackage(RefType configType, string pkg) {
+  getExplicitComponentScanBasePackage(configType, pkg)
+  or
+  getExplicitSpringBootScanBasePackage(configType, pkg)
+  or
+  (
+    declaresComponentScan(configType) and
+    not exists(string explicitPkg |
+      getExplicitComponentScanBasePackage(configType, explicitPkg)
+      or getExplicitSpringBootScanBasePackage(configType, explicitPkg)
+    ) and
+    pkg = configType.getPackage().getName()
+  )
+}
+
+/**
+ * 判断类型 t 是否位于 basePkg 或其子包下。
+ *
+ * 注意：
+ * 不能写成 pkg.matches(basePkg + ".%") 的独立字符串谓词，
+ * 因为 CodeQL 不会从无限 string 空间中枚举 pkg/basePkg。
+ * 这里用 RefType 和 getComponentScanBasePackage(...) 先把两边绑定到有限程序实体/注解值。
+ */
+private predicate typeIsUnderScanBasePackage(RefType t, string basePkg) {
+  exists(RefType configType, string candidatePkg |
+    getComponentScanBasePackage(configType, basePkg) and
+    candidatePkg = t.getPackage().getName() and
+    (
+      candidatePkg = basePkg
+      or
+      candidatePkg.matches(basePkg + ".%")
+    )
+  )
+}
+
+private predicate hasAnyComponentScanConfiguration() {
+  exists(RefType configType, string basePkg |
+    getComponentScanBasePackage(configType, basePkg)
+  )
+}
+
+/**
+ * 某类型是否处于任意 component scan 范围内。
+ *
+ * 如果数据库里没有发现 @SpringBootApplication / @ComponentScan，
+ * 则不强行限制包范围，避免误杀测试代码或非标准项目。
+ */
+private predicate isInsideComponentScanScope(RefType t) {
+  not hasAnyComponentScanConfiguration()
+  or
+  exists(RefType configType, string basePkg |
+    getComponentScanBasePackage(configType, basePkg) and
+    typeIsUnderScanBasePackage(t, basePkg)
+  )
+}
+
+/**
+ * @ComponentScan.Filter 的 type 判断。
+ */
+private predicate componentScanFilterHasType(Annotation filter, string typeName) {
+  filter.getEnumConstantValue("type").hasName(typeName)
+}
+
+/**
+ * 读取 @ComponentScan.Filter(value/classes = Some.class)。
+ */
+private predicate getComponentScanFilterTypeValue(Annotation filter, RefType t) {
+  t = filter.getTypeValue("value")
+  or
+  t = filter.getATypeArrayValue("value")
+  or
+  t = filter.getTypeValue("classes")
+  or
+  t = filter.getATypeArrayValue("classes")
+}
+
+/**
+ * 低成本 excludeFilters 支持：
+ *
+ * 1. ANNOTATION:
+ *    @ComponentScan(excludeFilters =
+ *      @Filter(type = FilterType.ANNOTATION, classes = Deprecated.class))
+ *
+ * 2. ASSIGNABLE_TYPE:
+ *    @ComponentScan(excludeFilters =
+ *      @Filter(type = FilterType.ASSIGNABLE_TYPE, classes = FooService.class))
+ */
+private predicate isExcludedByComponentScanFilter(RefType candidate) {
+  exists(RefType configType, Annotation scan, Annotation filter |
+    getDeclaredComponentScanAnnotation(configType, scan) and
+    filter = scan.getAnArrayValue("excludeFilters") and
+    (
+      exists(RefType excludedAnn, Annotation ann |
+        componentScanFilterHasType(filter, "ANNOTATION") and
+        getComponentScanFilterTypeValue(filter, excludedAnn) and
+        ann = candidate.getAnAnnotation() and
+        ann.getType() = excludedAnn
+      )
+      or
+      exists(RefType excludedType |
+        componentScanFilterHasType(filter, "ASSIGNABLE_TYPE") and
+        getComponentScanFilterTypeValue(filter, excludedType) and
+        (
+          candidate = excludedType
+          or candidate.getAStrictAncestor() = excludedType
+        )
+      )
+    )
+  )
+}
+
+/**
+ * 直接 Spring stereotype。
+ */
+private predicate isDirectSpringBeanStereotype(Annotation ann) {
+  ann.getType().hasQualifiedName("org.springframework.stereotype", "Controller")
+  or ann.getType().hasQualifiedName("org.springframework.stereotype", "Service")
+  or ann.getType().hasQualifiedName("org.springframework.stereotype", "Component")
+  or ann.getType().hasQualifiedName("org.springframework.stereotype", "Repository")
+}
+
+/**
+ * 元注解 stereotype。
+ *
+ * 支持：
+ * - @RestController 这种 Spring 自带组合注解
+ * - 用户自定义：
+ *
+ *   @Component
+ *   public @interface UseCase {}
+ *
+ *   @UseCase
+ *   class OrderUseCase {}
+ */
+private predicate annotationTypeHasComponentMetaAnnotation(RefType annType) {
+  exists(Annotation meta |
+    meta = annType.getAnAnnotation() and
+    (
+      meta.getType().hasQualifiedName("org.springframework.stereotype", "Component")
+      or annotationTypeHasComponentMetaAnnotation(meta.getType())
+    )
+  )
+}
+
+/**
+ * 默认 component scan 可发现的候选组件注解。
+ */
+private predicate isSpringBeanStereotype(Annotation ann) {
+  isDirectSpringBeanStereotype(ann)
+  or annotationTypeHasComponentMetaAnnotation(ann.getType())
+}
+
+/**
+ * 组件扫描得到的 bean 类型。
+ */
+private predicate isComponentScannedBeanType(RefType t) {
+  exists(Annotation ann |
+    ann = t.getAnAnnotation() and
+    isSpringBeanStereotype(ann)
+  ) and
+  isInsideComponentScanScope(t) and
+  not isExcludedByComponentScanFilter(t)
+}
+
+/** -----------------------------
+ * Bean stereotypes
+ * ----------------------------- */
 private predicate isBeanProducedType(RefType t) {
   exists(Method m |
     isBeanFactoryMethod(m) and
@@ -79,11 +370,18 @@ private predicate isBeanProducedType(RefType t) {
   )
 }
 
+/**
+ * 统一 Spring bean 类型：
+ *
+ * 1. component scan 可扫描到的 stereotype / meta-stereotype 类型；
+ * 2. @Configuration 类中 @Bean 方法产出的类型。
+ *
+ * 注意：
+ * - @Bean 方法本身不依赖 component scan 包范围；
+ * - @Profile / @Conditional 只记录为限制，不在这里精确裁剪。
+ */
 predicate isSpringBeanType(RefType t) {
-  exists(Annotation ann |
-    ann = t.getAnAnnotation() and
-    isSpringBeanStereotype(ann)
-  )
+  isComponentScannedBeanType(t)
   or
   isBeanProducedType(t)
 }
