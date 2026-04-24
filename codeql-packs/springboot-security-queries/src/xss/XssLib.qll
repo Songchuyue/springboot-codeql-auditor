@@ -2,6 +2,7 @@ import java
 import semmle.code.java.dataflow.DataFlow
 import semmle.code.java.frameworks.spring.SpringController
 import common.CommonTaintSteps
+import common.SpringBindingSources
 
 predicate isOfficialSpringMvcSourceNode(DataFlow::Node src) {
   exists(SpringRequestMappingParameter p |
@@ -21,6 +22,8 @@ predicate isProjectXssSink(DataFlow::Node sink) {
 
 predicate isProjectXssFlowStep(DataFlow::Node pred, DataFlow::Node succ) {
   isCommonStringAssemblyStep(pred, succ)
+  or
+  isSpringBoundObjectPropertyReadStep(pred, succ)
 }
 
 /**

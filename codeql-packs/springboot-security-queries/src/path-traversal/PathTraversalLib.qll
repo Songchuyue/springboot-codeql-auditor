@@ -3,6 +3,7 @@ import semmle.code.java.frameworks.spring.SpringController
 import semmle.code.java.security.PathSanitizer
 import common.CommonTaintSteps
 import common.FileSystemSinks
+import common.SpringBindingSources
 
 predicate isOfficialSpringMvcSourceNode(DataFlow::Node src) {
   exists(SpringRequestMappingParameter p |
@@ -27,4 +28,6 @@ predicate isProjectPathTraversalSanitizer(DataFlow::Node node) {
 /** Extension point for project-specific extra taint steps. */
 predicate isProjectPathTraversalFlowStep(DataFlow::Node pred, DataFlow::Node succ) {
   isCommonStringAssemblyStep(pred, succ)
+  or
+  isSpringBoundObjectPropertyReadStep(pred, succ)
 }

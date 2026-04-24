@@ -3,6 +3,7 @@ import semmle.code.java.controlflow.Guards
 import semmle.code.java.dataflow.DataFlow
 import semmle.code.java.frameworks.spring.SpringController
 import semmle.code.java.security.RequestForgery
+import common.SpringBindingSources
 
 predicate isOfficialSpringMvcSourceNode(DataFlow::Node src) {
   exists(SpringRequestMappingParameter p |
@@ -254,4 +255,6 @@ predicate isProjectSsrfSanitizer(DataFlow::Node node) { none() }
 
 
 /** Extension point for project-specific SSRF extra taint steps. */
-predicate isProjectSsrfFlowStep(DataFlow::Node pred, DataFlow::Node succ) { none() }
+predicate isProjectSsrfFlowStep(DataFlow::Node pred, DataFlow::Node succ) {
+  isSpringBoundObjectPropertyReadStep(pred, succ)
+}

@@ -4,6 +4,7 @@ import semmle.code.java.dataflow.DataFlow
 import semmle.code.java.frameworks.spring.SpringController
 import semmle.code.java.security.CommandLineQuery
 import common.CommonTaintSteps
+import common.SpringBindingSources
 
 predicate isOfficialSpringMvcSourceNode(DataFlow::Node src) {
   exists(SpringRequestMappingParameter p |
@@ -98,6 +99,8 @@ predicate isProjectCommandInjectionFlowStep(DataFlow::Node pred, DataFlow::Node 
   isCommonStringAssemblyStep(pred, succ)
   or
   isCommonListFactoryFlowStep(pred, succ)
+  or
+  isSpringBoundObjectPropertyReadStep(pred, succ)
 }
 
 predicate isProjectCommandInjectionSanitizer(DataFlow::Node node) { none() }
