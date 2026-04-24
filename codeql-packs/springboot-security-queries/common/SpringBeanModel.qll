@@ -19,6 +19,7 @@
  */
 
 import java
+import common.SpringAutoConfigurationModel
 
 private predicate hasQualifiedAnnotation(Annotatable a, string pkg, string name) {
   exists(Annotation ann |
@@ -32,7 +33,15 @@ private predicate hasBeanAnnotation(Annotatable a) {
 }
 
 private predicate isConfigurationType(RefType t) {
-  hasQualifiedAnnotation(t, "org.springframework.context.annotation", "Configuration")
+  hasQualifiedAnnotation(
+    t,
+    "org.springframework.context.annotation",
+    "Configuration"
+  )
+  or
+  isActiveAutoConfigurationType(t)
+  or
+  isNestedConfigurationInActiveAutoConfiguration(t)
 }
 
 private predicate isBeanFactoryMethod(Method m) {
