@@ -1,10 +1,19 @@
 edges
 | Test.java:25:24:25:48 | user : String | Test.java:26:38:26:41 | user | provenance | Sink:MaD:50797 |
+| Test.java:25:24:25:48 | user : String | Test.java:26:38:26:41 | user : String | provenance |  |
+| Test.java:26:38:26:41 | user : String | Test.java:179:33:179:43 | user : String | provenance | Config |
 | Test.java:30:25:30:49 | user : String | Test.java:31:21:31:40 | ... + ... | provenance | Sink:MaD:50776 |
+| Test.java:30:25:30:49 | user : String | Test.java:31:21:31:40 | ... + ... : String | provenance |  |
+| Test.java:31:21:31:40 | ... + ... : String | Test.java:179:33:179:43 | user : String | provenance | Config |
 | Test.java:39:27:39:51 | user : String | Test.java:40:26:40:29 | user | provenance |  |
+| Test.java:39:27:39:51 | user : String | Test.java:40:26:40:29 | user : String | provenance |  |
+| Test.java:40:26:40:29 | user : String | Test.java:179:33:179:43 | user : String | provenance | Config |
 | Test.java:44:27:44:51 | user : String | Test.java:45:57:45:60 | user : String | provenance |  |
+| Test.java:45:26:45:61 | format(...) : String | Test.java:179:33:179:43 | user : String | provenance | Config |
 | Test.java:45:26:45:61 | new ..[] { .. } : Object[] [[]] : String | Test.java:45:26:45:61 | format(...) | provenance | MaD:44224 |
+| Test.java:45:26:45:61 | new ..[] { .. } : Object[] [[]] : String | Test.java:45:26:45:61 | format(...) : String | provenance | MaD:44224 |
 | Test.java:45:57:45:60 | user : String | Test.java:45:26:45:61 | format(...) | provenance | Config |
+| Test.java:45:57:45:60 | user : String | Test.java:45:26:45:61 | format(...) : String | provenance | Config |
 | Test.java:45:57:45:60 | user : String | Test.java:45:26:45:61 | new ..[] { .. } : Object[] [[]] : String | provenance |  |
 | Test.java:49:28:49:52 | user : String | Test.java:51:19:51:22 | user : String | provenance |  |
 | Test.java:51:9:51:10 | sb [post update] : StringBuilder | Test.java:52:26:52:27 | sb : StringBuilder | provenance |  |
@@ -12,23 +21,40 @@ edges
 | Test.java:51:19:51:22 | user : String | Test.java:51:9:51:10 | sb [post update] : StringBuilder | provenance | MaD:44184 |
 | Test.java:52:26:52:27 | sb : StringBuilder | Test.java:52:26:52:38 | toString(...) | provenance | Config |
 | Test.java:52:26:52:27 | sb : StringBuilder | Test.java:52:26:52:38 | toString(...) | provenance | MaD:44199 |
+| Test.java:52:26:52:27 | sb : StringBuilder | Test.java:52:26:52:38 | toString(...) : String | provenance | Config |
+| Test.java:52:26:52:27 | sb : StringBuilder | Test.java:52:26:52:38 | toString(...) : String | provenance | MaD:44199 |
+| Test.java:52:26:52:38 | toString(...) : String | Test.java:179:33:179:43 | user : String | provenance | Config |
 | Test.java:60:29:60:53 | user : String | Test.java:61:28:61:31 | user : String | provenance |  |
 | Test.java:61:28:61:31 | user : String | Test.java:119:22:119:32 | user : String | provenance |  |
+| Test.java:61:28:61:31 | user : String | Test.java:179:33:179:43 | user : String | provenance | Config |
 | Test.java:119:22:119:32 | user : String | Test.java:120:30:120:51 | ... + ... | provenance |  |
+| Test.java:119:22:119:32 | user : String | Test.java:120:30:120:51 | ... + ... : String | provenance |  |
+| Test.java:120:30:120:51 | ... + ... : String | Test.java:179:33:179:43 | user : String | provenance | Config |
 | Test.java:140:26:140:50 | user : String | Test.java:141:26:141:29 | user : String | provenance |  |
 | Test.java:141:26:141:29 | user : String | Test.java:175:36:175:47 | getArgs(...) | provenance | Config Sink:MaD:50779 |
+| Test.java:141:26:141:29 | user : String | Test.java:175:36:175:47 | getArgs(...) : Object[] | provenance | Config |
+| Test.java:141:26:141:29 | user : String | Test.java:179:33:179:43 | user : String | provenance | Config |
 | Test.java:148:22:148:46 | user : String | Test.java:149:27:149:30 | user : String | provenance |  |
 | Test.java:149:27:149:30 | user : String | Test.java:179:33:179:43 | user : String | provenance | Config |
+| Test.java:156:32:156:56 | user : String | Test.java:157:31:157:34 | user : String | provenance |  |
+| Test.java:157:31:157:34 | user : String | Test.java:179:33:179:43 | user : String | provenance | Config |
+| Test.java:175:36:175:47 | getArgs(...) : Object[] | Test.java:179:33:179:43 | user : String | provenance | Config |
 | Test.java:179:33:179:43 | user : String | Test.java:180:30:180:49 | ... + ... | provenance |  |
+| Test.java:179:33:179:43 | user : String | Test.java:180:30:180:49 | ... + ... : String | provenance |  |
+| Test.java:180:30:180:49 | ... + ... : String | Test.java:179:33:179:43 | user : String | provenance | Config |
 nodes
 | Test.java:25:24:25:48 | user : String | semmle.label | user : String |
 | Test.java:26:38:26:41 | user | semmle.label | user |
+| Test.java:26:38:26:41 | user : String | semmle.label | user : String |
 | Test.java:30:25:30:49 | user : String | semmle.label | user : String |
 | Test.java:31:21:31:40 | ... + ... | semmle.label | ... + ... |
+| Test.java:31:21:31:40 | ... + ... : String | semmle.label | ... + ... : String |
 | Test.java:39:27:39:51 | user : String | semmle.label | user : String |
 | Test.java:40:26:40:29 | user | semmle.label | user |
+| Test.java:40:26:40:29 | user : String | semmle.label | user : String |
 | Test.java:44:27:44:51 | user : String | semmle.label | user : String |
 | Test.java:45:26:45:61 | format(...) | semmle.label | format(...) |
+| Test.java:45:26:45:61 | format(...) : String | semmle.label | format(...) : String |
 | Test.java:45:26:45:61 | new ..[] { .. } : Object[] [[]] : String | semmle.label | new ..[] { .. } : Object[] [[]] : String |
 | Test.java:45:57:45:60 | user : String | semmle.label | user : String |
 | Test.java:49:28:49:52 | user : String | semmle.label | user : String |
@@ -36,17 +62,23 @@ nodes
 | Test.java:51:19:51:22 | user : String | semmle.label | user : String |
 | Test.java:52:26:52:27 | sb : StringBuilder | semmle.label | sb : StringBuilder |
 | Test.java:52:26:52:38 | toString(...) | semmle.label | toString(...) |
+| Test.java:52:26:52:38 | toString(...) : String | semmle.label | toString(...) : String |
 | Test.java:60:29:60:53 | user : String | semmle.label | user : String |
 | Test.java:61:28:61:31 | user : String | semmle.label | user : String |
 | Test.java:119:22:119:32 | user : String | semmle.label | user : String |
 | Test.java:120:30:120:51 | ... + ... | semmle.label | ... + ... |
+| Test.java:120:30:120:51 | ... + ... : String | semmle.label | ... + ... : String |
 | Test.java:140:26:140:50 | user : String | semmle.label | user : String |
 | Test.java:141:26:141:29 | user : String | semmle.label | user : String |
 | Test.java:148:22:148:46 | user : String | semmle.label | user : String |
 | Test.java:149:27:149:30 | user : String | semmle.label | user : String |
+| Test.java:156:32:156:56 | user : String | semmle.label | user : String |
+| Test.java:157:31:157:34 | user : String | semmle.label | user : String |
 | Test.java:175:36:175:47 | getArgs(...) | semmle.label | getArgs(...) |
+| Test.java:175:36:175:47 | getArgs(...) : Object[] | semmle.label | getArgs(...) : Object[] |
 | Test.java:179:33:179:43 | user : String | semmle.label | user : String |
 | Test.java:180:30:180:49 | ... + ... | semmle.label | ... + ... |
+| Test.java:180:30:180:49 | ... + ... : String | semmle.label | ... + ... : String |
 subpaths
 #select
 | Test.java:26:38:26:41 | user | Test.java:25:24:25:48 | user : String | Test.java:26:38:26:41 | user | Spring MVC input reaches a log message without log-injection sanitization. |
@@ -56,4 +88,12 @@ subpaths
 | Test.java:52:26:52:38 | toString(...) | Test.java:49:28:49:52 | user : String | Test.java:52:26:52:38 | toString(...) | Spring MVC input reaches a log message without log-injection sanitization. |
 | Test.java:120:30:120:51 | ... + ... | Test.java:60:29:60:53 | user : String | Test.java:120:30:120:51 | ... + ... | Spring MVC input reaches a log message without log-injection sanitization. |
 | Test.java:175:36:175:47 | getArgs(...) | Test.java:140:26:140:50 | user : String | Test.java:175:36:175:47 | getArgs(...) | Spring MVC input reaches a log message without log-injection sanitization. |
+| Test.java:180:30:180:49 | ... + ... | Test.java:25:24:25:48 | user : String | Test.java:180:30:180:49 | ... + ... | Spring MVC input reaches a log message without log-injection sanitization. |
+| Test.java:180:30:180:49 | ... + ... | Test.java:30:25:30:49 | user : String | Test.java:180:30:180:49 | ... + ... | Spring MVC input reaches a log message without log-injection sanitization. |
+| Test.java:180:30:180:49 | ... + ... | Test.java:39:27:39:51 | user : String | Test.java:180:30:180:49 | ... + ... | Spring MVC input reaches a log message without log-injection sanitization. |
+| Test.java:180:30:180:49 | ... + ... | Test.java:44:27:44:51 | user : String | Test.java:180:30:180:49 | ... + ... | Spring MVC input reaches a log message without log-injection sanitization. |
+| Test.java:180:30:180:49 | ... + ... | Test.java:49:28:49:52 | user : String | Test.java:180:30:180:49 | ... + ... | Spring MVC input reaches a log message without log-injection sanitization. |
+| Test.java:180:30:180:49 | ... + ... | Test.java:60:29:60:53 | user : String | Test.java:180:30:180:49 | ... + ... | Spring MVC input reaches a log message without log-injection sanitization. |
+| Test.java:180:30:180:49 | ... + ... | Test.java:140:26:140:50 | user : String | Test.java:180:30:180:49 | ... + ... | Spring MVC input reaches a log message without log-injection sanitization. |
 | Test.java:180:30:180:49 | ... + ... | Test.java:148:22:148:46 | user : String | Test.java:180:30:180:49 | ... + ... | Spring MVC input reaches a log message without log-injection sanitization. |
+| Test.java:180:30:180:49 | ... + ... | Test.java:156:32:156:56 | user : String | Test.java:180:30:180:49 | ... + ... | Spring MVC input reaches a log message without log-injection sanitization. |
